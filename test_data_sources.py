@@ -11,7 +11,7 @@ Usage:
 import asyncio
 import logging
 from biodiversity_intel.config import setup_logging
-from biodiversity_intel.data_sources import IUCNClient
+from biodiversity_intel.data_sources import IUCNClient, GBIFClient
 
 # Setup logging
 logger = setup_logging("DEBUG")
@@ -66,18 +66,59 @@ def test_iucn_client():
         return False
 
 
+def test_gbif_client():
+    """Test GBIF Occurrence API client."""
+    print_separator("Testing GBIF Occurrence API Client")
+
+    try:
+        client = GBIFClient()
+        test_logger.info("GBIF client initialized successfully")
+
+        # Test species
+        test_species = [
+            "Panthera tigris",
+            "Ailuropoda melanoleuca",
+            "Gorilla beringei"
+        ]
+
+        for species in test_species:
+            print(f"\n[CLIPBOARD] Testing GBIF occurrence retrieval for: {species}")
+            try:
+                data = client.get_occurrences(species, limit=100)
+                if data:
+                    print(f"[PASS] Successfully retrieved GBIF data for {species}")
+                    print(f"   Occurrences: {data.occurrence_count}")
+                    print(f"   Temporal distribution: {len(data.temporal_distribution)} time periods")
+                    print(f"   Spatial points: {len(data.spatial_distribution)}")
+                else:
+                    print(f"[WARN]  No GBIF data found for {species}")
+            except Exception as e:
+                print(f"[FAIL] Error retrieving GBIF data for {species}: {e}")
+                test_logger.error(f"GBIF error for {species}: {e}", exc_info=True)
+
+        print("\n[PASS] GBIF client test completed")
+        return True
+
+    except Exception as e:
+        print(f"\n[FAIL] GBIF client test failed: {e}")
+        test_logger.error(f"GBIF test failed: {e}", exc_info=True)
+        return False
+
+
 
 def run_all_tests():
     """Run all data source client tests."""
     print_separator("[TEST] Data Source Client Test Suite")
-    print("Testing IUCN API client\n")
+    print("Testing IUCN and GBIF API clients\n")
 
     results = {
-        "IUCN": False
+        "IUCN": False,
+        "GBIF": False
     }
 
     # Run tests
     results["IUCN"] = test_iucn_client()
+    results["GBIF"] = test_gbif_client()
 
     # Summary
     print_separator("[CHART] Test Results Summary")
