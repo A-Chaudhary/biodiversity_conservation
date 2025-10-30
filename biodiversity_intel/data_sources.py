@@ -3,6 +3,7 @@ Data Source API Clients
 
 This module provides clients for interacting with biodiversity data APIs:
 - IUCN Red List API
+- GBIF Occurrence API
 """
 
 import os
@@ -21,6 +22,14 @@ class IUCNData(BaseModel):
     population_trend: Optional[str] = None
     threats: List[str] = []
     assessment_date: Optional[str] = None
+
+
+class GBIFData(BaseModel):
+    """Model for GBIF occurrence data."""
+    scientific_name: str
+    occurrence_count: int
+    temporal_distribution: Dict[str, int] = {}
+    spatial_distribution: List[Dict[str, Any]] = []
 
 
 class IUCNClient:
@@ -166,4 +175,128 @@ class IUCNClient:
             return None
         except Exception as e:
             logger.error(f"IUCN: Unexpected error fetching data for '{species_name}': {e}", exc_info=True)
+            return None
+
+
+class GBIFClient:
+    """Client for GBIF Occurrence API."""
+
+    def __init__(self, api_url: Optional[str] = None):
+        self.api_url = api_url or os.getenv("GBIF_API_URL", "https://api.gbif.org/v1")
+        logger.info(f"Initialized GBIF client with URL: {self.api_url}")
+
+    def get_occurrences(self, species_name: str, limit: int = 1000) -> Optional[GBIFData]:
+        """
+        Retrieve GBIF occurrence data for a species.
+
+        Args:
+            species_name: Scientific name of the species
+            limit: Maximum number of occurrences to retrieve
+
+        Returns:
+            GBIFData object or None if not found
+        """
+        logger.info(f"GBIF: Fetching occurrence data for species '{species_name}' (limit: {limit})")
+
+        try:
+            # Step 1: Get species key by matching scientific name
+            logger.debug(f"GBIF: Matching species name '{species_name}'")
+            match_endpoint = f"{self.api_url}/species/match"
+            match_params = {"name": species_name}
+
+            match_response = requests.get(match_endpoint, params=match_params, timeout=30)
+            match_response.raise_for_status()
+            match_data = match_response.json()
+
+            # Check if we got a valid match
+            if match_data.get("matchType") == "NONE" or "usageKey" not in match_data:
+                logger.warning(f"GBIF: No species match found for '{species_name}'")
+                return None
+
+            species_key = match_data["usageKey"]
+            matched_name = match_data.get("scientificName", species_name)
+            logger.debug(f"GBIF: Matched to '{matched_name}' with key {species_key}")
+
+            # Step 2: Get occurrence count
+            logger.debug(f"GBIF: Fetching occurrence count for species key {species_key}")
+            count_endpoint = f"{self.api_url}/occurrence/search"
+            count_params = {
+                "taxonKey": species_key,
+                "limit": 0  # We just want the count
+            }
+
+            count_response = requests.get(count_endpoint, params=count_params, timeout=30)
+            count_response.raise_for_status()
+            count_data = count_response.json()
+
+            total_count = count_data.get("count", 0)
+            logger.info(f"GBIF: Found {total_count} occurrences for '{species_name}'")
+
+            if total_count == 0:
+                logger.warning(f"GBIF: No occurrences found for '{species_name}'")
+                return None
+
+            # Step 3: Fetch occurrence records for temporal and spatial analysis
+            logger.debug(f"GBIF: Fetching occurrence records (limit: {min(limit, 300)})")
+            occurrence_params = {
+                "taxonKey": species_key,
+                "limit": min(limit, 300),  # Limit to reasonable number for analysis
+                "offset": 0
+            }
+
+            occurrence_response = requests.get(count_endpoint, params=occurrence_params, timeout=30)
+            occurrence_response.raise_for_status()
+            occurrence_data = occurrence_response.json()
+
+            results = occurrence_data.get("results", [])
+            logger.debug(f"GBIF: Retrieved {len(results)} occurrence records")
+
+            # Step 4: Analyze temporal distribution (by year)
+            temporal_dist = {}
+            spatial_dist = []
+
+            for record in results:
+                # Temporal: extract year
+                year = record.get("year")
+                if year:
+                    temporal_dist[str(year)] = temporal_dist.get(str(year), 0) + 1
+
+                # Spatial: extract coordinates
+                lat = record.get("decimalLatitude")
+                lon = record.get("decimalLongitude")
+                country = record.get("country")
+
+                if lat is not None and lon is not None:
+                    spatial_dist.append({
+                        "latitude": lat,
+                        "longitude": lon,
+                        "country": country or "Unknown",
+                        "year": year
+                    })
+
+            logger.info(f"GBIF: Analyzed temporal distribution - {len(temporal_dist)} years")
+            logger.info(f"GBIF: Analyzed spatial distribution - {len(spatial_dist)} locations")
+
+            return GBIFData(
+                scientific_name=matched_name,
+                occurrence_count=total_count,
+                temporal_distribution=temporal_dist,
+                spatial_distribution=spatial_dist
+            )
+
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 404:
+                logger.warning(f"GBIF: Species '{species_name}' not found (404)")
+                return None
+            else:
+                logger.error(f"GBIF: HTTP error fetching occurrences for '{species_name}': {e}", exc_info=True)
+                return None
+        except requests.exceptions.Timeout:
+            logger.error(f"GBIF: Request timeout for '{species_name}'")
+            return None
+        except requests.exceptions.RequestException as e:
+            logger.error(f"GBIF: Request error for '{species_name}': {e}", exc_info=True)
+            return None
+        except Exception as e:
+            logger.error(f"GBIF: Unexpected error fetching occurrences for '{species_name}': {e}", exc_info=True)
             return None
