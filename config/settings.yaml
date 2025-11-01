@@ -1,0 +1,54 @@
+# Application-wide settings
+
+system:
+  name: "Biodiversity Conservation Intelligence System"
+  version: "0.1.0"
+  description: "Multi-agent threat intelligence for species conservation"
+
+agents:
+  data_agent:
+    name: "Data Retrieval Agent"
+    max_retries: 3
+    timeout: 30
+
+  analysis_agent:
+    name: "Analysis Agent"
+    temperature: 0.2
+    max_reasoning_steps: 5
+
+  report_agent:
+    name: "Report Generation Agent"
+    temperature: 0.3
+    output_format: "markdown"
+
+data_sources:
+  iucn:
+    enabled: true
+    rate_limit: 10000  # requests per day
+    cache_duration: 86400
+
+  gbif:
+    enabled: true
+    max_occurrences: 1000
+    cache_duration: 86400
+
+  news:
+    enabled: false
+    sources:
+      - "mongabay"
+    max_articles: 5
+
+evaluation:
+  metrics:
+    - "threat_detection_recall"
+    - "confidence_alignment_score"
+    - "early_warning_signal"
+
+  test_species:
+    - "Panthera tigris"  # Tiger
+    - "Ailuropoda melanoleuca"  # Giant Panda
+    - "Gorilla beringei"  # Mountain Gorilla
+
+prompts:
+  directory: "config/prompts"
+  version_control: true
