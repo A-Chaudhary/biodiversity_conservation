@@ -144,9 +144,11 @@ Task: Analyze the data and identify:
 3. Any inconsistencies between IUCN assessment and GBIF occurrence patterns
 4. Relevant insights from recent conservation news
 5. Early warning signals that may require urgent attention
+6. Temporal trends in conservation status from IUCN assessment history
 
 Provide a detailed but concise analysis focusing on evidence-based conclusions.
 Consider how news articles complement or contradict the scientific data.
+Pay attention to how the conservation status has changed over time based on assessment history.
 """)
 
 REPORT_PROMPT = PromptTemplate("""

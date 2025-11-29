@@ -122,6 +122,16 @@ class AnalysisAgent(BaseAgent):
             # Format data for LLM analysis
             logger.debug(f"AnalysisAgent: Formatting data for LLM analysis")
             iucn_summary = json.dumps(iucn_data, indent=2) if iucn_data else "No IUCN data available"
+
+            # Add assessment history summary if available
+            if iucn_data and iucn_data.get('assessment_history'):
+                history_summary = "\n".join([
+                    f"  - {a['year_published']}: {a['status']}"
+                    for a in iucn_data['assessment_history'][:10]  # Limit to 10 most recent
+                ])
+                iucn_summary += f"\n\nAssessment History:\n{history_summary}"
+                logger.debug(f"AnalysisAgent: Added {len(iucn_data['assessment_history'])} assessments to history")
+
             gbif_summary = json.dumps(gbif_data, indent=2) if gbif_data else "No GBIF data available"
 
             # Format news data
@@ -146,6 +156,9 @@ class AnalysisAgent(BaseAgent):
                 gbif_data=gbif_summary,
                 news_data=news_summary
             )
+
+            with open('analysis_prompt.txt', 'w', encoding='utf-8') as f:
+                f.write(prompt)
 
             # Generate analysis
             logger.info(f"AnalysisAgent: Requesting LLM analysis for '{species_name}'")
@@ -234,6 +247,9 @@ class ReportAgent(BaseAgent):
                 species_name=species_name,
                 analysis_results=analysis
             )
+
+            with open('report_prompt.txt', 'w', encoding='utf-8') as f:
+                f.write(prompt)
 
             # Generate structured report
             logger.info(f"ReportAgent: Requesting LLM report generation for '{species_name}'")
