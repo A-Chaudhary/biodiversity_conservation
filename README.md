@@ -13,7 +13,8 @@ Global biodiversity loss is accelerating, yet conservation intelligence systems 
 - **Automated Threat Detection**: Identifies threats and inconsistencies across data sources
 - **Explainable AI**: Generates transparent, evidence-based conservation insights
 - **Streamlit Interface**: Interactive web app for species queries and visualization
-- **Evaluation Metrics**: Quantitative assessment of threat detection and confidence alignment
+- **Comprehensive Evaluation**: Quantitative metrics including threat detection recall, precision, F1-score, and confidence alignment scoring
+- **Automated Evaluation Script**: Run systematic evaluations on test species sets with detailed metrics and statistics
 
 ## System Architecture
 
@@ -113,6 +114,22 @@ streamlit run app.py
 
 The application will be available at `http://localhost:8501`
 
+### Running System Evaluation
+
+Evaluate the system's performance on a test set of species:
+
+```bash
+python evaluate_system.py
+```
+
+This will:
+- Run analysis on test species (default: Tiger, Giant Panda, Mountain Gorilla)
+- Calculate quantitative metrics (threat detection, confidence alignment, etc.)
+- Generate summary statistics and detailed results
+- Save results to `data/outputs/` (CSV, JSON formats)
+
+For detailed evaluation guidance, see [EVALUATION_GUIDE.md](EVALUATION_GUIDE.md).
+
 ### Development
 
 ```bash
@@ -121,6 +138,10 @@ pytest
 
 # Run tests with coverage
 pytest --cov=biodiversity_intel --cov-report=html
+
+# Test individual components
+python test_agents.py
+python test_data_sources.py
 
 # Format code
 black biodiversity_intel/ app.py tests/
@@ -146,15 +167,19 @@ biodiversity_conservation/
 │   ├── storage.py             # Caching and database
 │   └── config.py              # Configuration management
 ├── app.py                     # Streamlit web application
+├── evaluate_system.py         # System evaluation script
+├── test_agents.py             # Agent testing script
+├── test_data_sources.py       # Data source testing script
 ├── config/
 │   ├── settings.yaml          # Application settings
 │   └── prompts/               # Prompt templates
 ├── data/                      # Local data storage
 │   ├── cache/                 # API response cache
-│   ├── outputs/               # Generated reports
+│   ├── outputs/               # Generated reports and evaluation results
 │   └── sample/                # Sample test data
 ├── tests/                     # Test suite
 ├── notebooks/                 # Jupyter notebooks for exploration
+├── EVALUATION_GUIDE.md        # Comprehensive evaluation guide
 ├── .env.example               # Environment variable template
 ├── pyproject.toml             # uv project configuration
 └── README.md
@@ -172,9 +197,44 @@ biodiversity_conservation/
 
 ## Evaluation Metrics
 
-1. **Threat Detection Recall**: Ratio of IUCN-documented threats identified
-2. **Confidence Alignment Score**: Consistency between IUCN and GBIF trends
-3. **Early Warning Signal**: Binary flag for data contradictions
+The system includes comprehensive evaluation metrics implemented in `biodiversity_intel/analysis.py`:
+
+### Quantitative Metrics
+
+1. **Threat Detection Recall**: Ratio of IUCN-documented threats identified by the system
+   - Formula: `(Detected Threats ∩ IUCN Threats) / IUCN Threats`
+   - Range: 0.0 to 1.0 (higher is better)
+
+2. **Threat Detection Precision**: Accuracy of detected threats (no false positives)
+   - Formula: `True Positives / (True Positives + False Positives)`
+   - Range: 0.0 to 1.0 (higher is better)
+
+3. **Threat Detection F1-Score**: Harmonic mean of precision and recall
+   - Formula: `2 × (Precision × Recall) / (Precision + Recall)`
+   - Range: 0.0 to 1.0 (higher is better)
+
+4. **Confidence Alignment Score**: Measures consistency between IUCN and GBIF population trends
+   - Compares IUCN official assessments with GBIF occurrence-derived trends
+   - Returns: 1.0 (perfect match), 0.7 (partial alignment), 0.5 (neutral/unknown), 0.0 (contradiction)
+   - Handles variations in terminology and unknown values gracefully
+
+5. **Early Warning Signal**: Binary flag indicating data contradictions or high-risk conditions
+   - Triggers on: declining populations, critical conservation status, high threat counts
+
+### Performance Metrics
+
+- **Execution Time**: End-to-end workflow performance
+- **Data Coverage**: Percentage of species with complete data from all sources
+- **API Success Rates**: Reliability of external data source connections
+
+### Evaluation Outputs
+
+Running `evaluate_system.py` generates:
+- **evaluation_results.csv**: Detailed metrics per species
+- **evaluation_summary.json**: Aggregated statistics and averages
+- **evaluation_full_results.json**: Complete evaluation data including system outputs
+
+For detailed evaluation methodology and best practices, see [EVALUATION_GUIDE.md](EVALUATION_GUIDE.md).
 
 ## Data Sources
 
