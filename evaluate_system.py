@@ -194,7 +194,9 @@ class SystemEvaluator:
         metrics = {}
         iucn_data = system_output.get("iucn_data", {})
         assessment_history = iucn_data.get("assessment_history", [])
-        system_status = system_output.get("conservation_status", "Unknown")
+        
+        # Get system status from iucn_data (where it's actually stored)
+        system_status = iucn_data.get("conservation_status", "Unknown")
         
         if assessment_history:
             sorted_history = sorted(assessment_history, key=lambda x: int(x.get("year_published", 0)))
