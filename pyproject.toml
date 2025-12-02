@@ -27,6 +27,7 @@ dependencies = [
     "aiohttp>=3.9.0",
     "tenacity>=8.0.0",
     "pyyaml>=6.0.0",
+    "mcp>=1.0.0",
 ]
 
 [project.optional-dependencies]

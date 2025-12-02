@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "biodiversity-conservation-intel": {
+      "command": "absolute path to python (in .venv)",
+      "args": [
+        "c:\\Users\\chaud\\Desktop\\!Back_this_folder!\\College\\Masters\\Fall 2025\\LLM Based GenAI\\biodiversity_conservation\\mcp_server.py"
+      ]
+    }
+  }
+}
