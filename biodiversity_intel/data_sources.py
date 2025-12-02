@@ -11,6 +11,8 @@ import os
 import requests
 import logging
 import hashlib
+import re
+import urllib.parse
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -486,15 +488,117 @@ class MongabayClient:
             self.cache = None
             logger.info(f"Initialized Mongabay RSS client (caching disabled)")
     
-    def _get_cache_key(self, species_name: str, max_articles: int = 5) -> str:
+    def _get_cache_key(self, species_name: str, max_articles: int = 20) -> str:
         """Generate cache key for species news."""
         safe_name = species_name.lower().replace(" ", "_").replace("/", "_")
         key_hash = hashlib.md5(f"{safe_name}_{max_articles}".encode()).hexdigest()[:8]
         return f"news_{safe_name}_{key_hash}"
 
-    def search_species_news(self, species_name: str, max_articles: int = 5) -> List[Dict[str, str]]:
+    def _search_via_duckduckgo(self, species_name: str, max_results: int = 20) -> List[Dict[str, str]]:
         """
-        Search Mongabay RSS feed for conservation news about a species.
+        Search for Mongabay articles using DuckDuckGo.
+
+        Args:
+            species_name: Scientific or common name of the species
+            max_results: Maximum number of results to retrieve
+
+        Returns:
+            List of article dictionaries with title, url, and pub_date
+        """
+        try:
+            # Import BeautifulSoup
+            try:
+                from bs4 import BeautifulSoup
+            except ImportError:
+                logger.warning("Mongabay: BeautifulSoup not installed, skipping DuckDuckGo search")
+                return []
+
+            # Build DuckDuckGo search query
+            search_query = f'site:{self.base_url.replace("https://", "")} "{species_name}"'
+            encoded_query = urllib.parse.quote(search_query)
+            duckduckgo_url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
+
+            logger.debug(f"Mongabay: Searching DuckDuckGo with query: {search_query}")
+
+            # Make request with browser-like headers
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.5",
+            }
+
+            response = requests.get(duckduckgo_url, headers=headers, timeout=15)
+            response.raise_for_status()
+
+            # Parse HTML
+            soup = BeautifulSoup(response.content, 'html.parser')
+
+            # Find search result containers
+            result_divs = soup.find_all('div', class_='result')
+            logger.debug(f"Mongabay: Found {len(result_divs)} DuckDuckGo search results")
+
+            articles = []
+
+            for div in result_divs[:max_results]:
+                try:
+                    # Extract title and URL
+                    a_tag = div.find('a', class_='result__a')
+                    if not a_tag:
+                        continue
+
+                    url_raw = a_tag.get('href', '')
+                    title = a_tag.get_text(strip=True)
+
+                    # Clean URL - extract from DuckDuckGo redirect
+                    url = url_raw if isinstance(url_raw, str) else ''
+                    if 'uddg=' in url:
+                        url = url.split('uddg=')[1].split('&')[0]
+                        url = urllib.parse.unquote(url)
+
+                    # Skip if URL is not from Mongabay
+                    if not url or 'mongabay' not in url:
+                        continue
+
+                    # Extract publication date from URL
+                    # Mongabay URLs have format: /2024/12/article-title/
+                    pub_date = None
+                    date_match = re.search(r'/(\d{4})/(\d{2})/', url)
+                    if date_match:
+                        year = date_match.group(1)
+                        month = date_match.group(2)
+                        pub_date = f"{year}-{month}-01"
+
+                    # Fetch article summary
+                    summary = self._fetch_article_summary(url)
+
+                    articles.append({
+                        "title": title,
+                        "url": url,
+                        "summary": summary,
+                        "pub_date": pub_date
+                    })
+
+                    logger.debug(f"Mongabay: Added DuckDuckGo result: {title[:50]}...")
+
+                except Exception as e:
+                    logger.debug(f"Mongabay: Error parsing DuckDuckGo result: {e}")
+                    continue
+
+            logger.info(f"Mongabay: Found {len(articles)} articles via DuckDuckGo search")
+            return articles
+
+        except requests.exceptions.RequestException as e:
+            logger.warning(f"Mongabay: DuckDuckGo search failed: {e}")
+            return []
+        except Exception as e:
+            logger.warning(f"Mongabay: Unexpected error in DuckDuckGo search: {e}")
+            return []
+
+    def search_species_news(self, species_name: str, max_articles: int = 20) -> List[Dict[str, str]]:
+        """
+        Search Mongabay for conservation news about a species.
+
+        Combines results from both DuckDuckGo search and RSS feed, removing duplicates.
 
         Args:
             species_name: Scientific or common name of the species
@@ -510,8 +614,15 @@ class MongabayClient:
             if cached_data:
                 logger.info(f"Mongabay: Cache hit for species '{species_name}'")
                 return cached_data
-        
-        logger.info(f"Mongabay: Searching RSS feed for species '{species_name}' (max: {max_articles}, cache miss)")
+
+        logger.info(f"Mongabay: Searching for species '{species_name}' (max: {max_articles}, cache miss)")
+
+        # Try DuckDuckGo search first
+        logger.debug(f"Mongabay: Attempting DuckDuckGo search for '{species_name}'")
+        duckduckgo_articles = self._search_via_duckduckgo(species_name, max_articles)
+
+        # Then try RSS feed search
+        logger.info(f"Mongabay: Searching RSS feed for species '{species_name}'")
 
         try:
             # Import XML parser
@@ -542,58 +653,79 @@ class MongabayClient:
 
             if not items:
                 logger.warning(f"Mongabay: No RSS items found for '{species_name}'")
-                return []
-
-            articles = []
-            logger.debug(f"Mongabay: Found {len(items)} RSS items, processing up to {max_articles}")
-
-            for item in items[:max_articles]:
-                try:
-                    # Extract title and link from RSS item
-                    title_elem = item.find('title')
-                    link_elem = item.find('link')
-                    pub_date_elem = item.find('pubDate')
-
-                    if title_elem is None or link_elem is None:
-                        continue
-
-                    title = title_elem.text.strip() if title_elem.text else "No title"
-                    url = link_elem.text.strip() if link_elem.text else None
-                    pub_date = pub_date_elem.text.strip() if pub_date_elem is not None and pub_date_elem.text else None
-
-                    if not url:
-                        continue
-
-                    # Fetch article summary from the article page
-                    summary = self._fetch_article_summary(url)
-
-                    articles.append({
-                        "title": title,
-                        "url": url,
-                        "summary": summary,
-                        "pub_date": pub_date
-                    })
-                    logger.debug(f"Mongabay: Added article: {title[:50]}...")
-
-                except Exception as e:
-                    logger.debug(f"Mongabay: Error parsing RSS item: {e}")
-                    continue
-
-            if articles:
-                logger.info(f"Mongabay: Successfully retrieved {len(articles)} news articles for '{species_name}'")
+                rss_articles = []
             else:
-                logger.warning(f"Mongabay: No articles extracted from RSS for '{species_name}'")
+                rss_articles = []
+                logger.debug(f"Mongabay: Found {len(items)} RSS items, processing up to {max_articles}")
+
+                for item in items[:max_articles]:
+                    try:
+                        # Extract title and link from RSS item
+                        title_elem = item.find('title')
+                        link_elem = item.find('link')
+                        pub_date_elem = item.find('pubDate')
+
+                        if title_elem is None or link_elem is None:
+                            continue
+
+                        title = title_elem.text.strip() if title_elem.text else "No title"
+                        url = link_elem.text.strip() if link_elem.text else None
+                        pub_date = pub_date_elem.text.strip() if pub_date_elem is not None and pub_date_elem.text else None
+
+                        if not url:
+                            continue
+
+                        # Fetch article summary from the article page
+                        summary = self._fetch_article_summary(url)
+
+                        rss_articles.append({
+                            "title": title,
+                            "url": url,
+                            "summary": summary,
+                            "pub_date": pub_date
+                        })
+                        logger.debug(f"Mongabay: Added RSS article: {title[:50]}...")
+
+                    except Exception as e:
+                        logger.debug(f"Mongabay: Error parsing RSS item: {e}")
+                        continue
+
+                logger.info(f"Mongabay: Successfully retrieved {len(rss_articles)} articles from RSS")
+
+            # Combine DuckDuckGo and RSS results, removing duplicates
+            # Use URL as the unique key
+            seen_urls = set()
+            combined_articles = []
+
+            # Add DuckDuckGo articles first
+            for article in duckduckgo_articles:
+                url = article.get('url')
+                if url and url not in seen_urls:
+                    seen_urls.add(url)
+                    combined_articles.append(article)
+
+            # Add RSS articles, skipping duplicates
+            for article in rss_articles:
+                url = article.get('url')
+                if url and url not in seen_urls:
+                    seen_urls.add(url)
+                    combined_articles.append(article)
+
+            # Limit to max_articles
+            combined_articles = combined_articles[:max_articles]
+
+            logger.info(f"Mongabay: Combined total of {len(combined_articles)} unique articles ({len(duckduckgo_articles)} from DuckDuckGo, {len(rss_articles)} from RSS)")
 
             # Save to cache
             if self.enable_cache and self.cache:
                 cache_key = self._get_cache_key(species_name, max_articles)
                 try:
-                    self.cache.set(cache_key, articles)
-                    logger.debug(f"Mongabay: Cached {len(articles)} articles for '{species_name}'")
+                    self.cache.set(cache_key, combined_articles)
+                    logger.debug(f"Mongabay: Cached {len(combined_articles)} combined articles for '{species_name}'")
                 except Exception as e:
                     logger.warning(f"Mongabay: Failed to cache articles: {e}")
 
-            return articles
+            return combined_articles
 
         except requests.exceptions.HTTPError as e:
             logger.error(f"Mongabay: HTTP error {e.response.status_code}: {e}")
