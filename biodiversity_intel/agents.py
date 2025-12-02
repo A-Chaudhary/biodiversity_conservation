@@ -200,11 +200,40 @@ class AnalysisAgent(BaseAgent):
                 state["population_trend"] = iucn_data.get("population_trend", "Unknown")
                 state["threats"] = iucn_data.get("threats", [])
                 state["assessment_date"] = iucn_data.get("assessment_date")
+
+                # Extract and enrich threat_details with mapping
+                threat_details_raw = iucn_data.get("threat_details", [])
+                if threat_details_raw:
+                    # Get threats mapping from IUCN client
+                    from biodiversity_intel.data_sources import IUCNClient
+                    iucn_client = IUCNClient()
+                    threats_mapping = iucn_client.get_threats_mapping()
+
+                    # Enrich threat details with mapped names
+                    enriched_threats = []
+                    for threat in threat_details_raw:
+                        code = threat.get("code", "")
+                        name = threat.get("name", "")
+                        mapped_name = threats_mapping.get(code, name)  # Fallback to original name if no mapping
+
+                        enriched_threats.append({
+                            "code": code,
+                            "name": name,
+                            "mapped_name": mapped_name
+                        })
+
+                    state["threat_details"] = enriched_threats
+                    logger.info(f"AnalysisAgent: Extracted and enriched {len(enriched_threats)} threat details from IUCN data")
+                else:
+                    state["threat_details"] = []
+                    logger.debug(f"AnalysisAgent: No threat_details found in IUCN data")
+
                 logger.info(f"AnalysisAgent: Extracted {len(state['threats'])} threats from IUCN data")
             else:
                 state["conservation_status"] = "Unknown"
                 state["population_trend"] = "Unknown"
                 state["threats"] = []
+                state["threat_details"] = []
                 state["assessment_date"] = None
                 logger.warning(f"AnalysisAgent: No IUCN data to extract conservation status")
 

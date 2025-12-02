@@ -20,6 +20,7 @@ class ConservationState(TypedDict):
     news_data: list
     analysis: str
     threats: list
+    threat_details: list  # List of {"code": "1.1", "name": "Housing & urban areas", "mapped_name": "..."}
     population_trend: str
     confidence_score: float
     early_warning: bool
@@ -86,6 +87,7 @@ async def run_conservation_analysis(species_name: str) -> Dict[str, Any]:
             news_data=[],
             analysis="",
             threats=[],
+            threat_details=[],
             population_trend="unknown",
             confidence_score=0.0,
             early_warning=False,

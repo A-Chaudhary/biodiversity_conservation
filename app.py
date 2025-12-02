@@ -245,12 +245,36 @@ def main():
 
         with tab2:
             st.header("Identified Threats")
-            threats = result.get('threats', [])
-            if threats:
-                for i, threat in enumerate(threats, 1):
-                    st.write(f"{i}. {threat}")
+
+            # Use threat_details if available, otherwise fall back to legacy threats
+            threat_details = result.get('threat_details', [])
+
+            if threat_details:
+                st.markdown(f"**Total Threats:** {len(threat_details)}")
+                st.markdown("---")
+
+                for i, threat in enumerate(threat_details, 1):
+                    code = threat.get('code', 'N/A')
+                    mapped_name = threat.get('mapped_name', threat.get('name', 'Unknown threat'))
+
+                    # Create expandable section for each threat
+                    with st.expander(f"**{i}. {mapped_name}**", expanded=(i <= 5)):
+                        col1, col2 = st.columns([1, 3])
+                        with col1:
+                            st.markdown("**Threat Code:**")
+                            st.code(code)
+                        with col2:
+                            st.markdown("**IUCN Classification:**")
+                            st.write(mapped_name)
             else:
-                st.info("No specific threats identified.")
+                # Fallback to legacy threats format
+                threats = result.get('threats', [])
+                if threats:
+                    st.warning("⚠️ Displaying legacy threat format (codes only)")
+                    for i, threat in enumerate(threats, 1):
+                        st.write(f"{i}. {threat}")
+                else:
+                    st.info("No specific threats identified.")
 
         with tab3:
             st.header("LLM Analysis")

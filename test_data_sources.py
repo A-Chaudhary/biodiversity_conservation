@@ -125,7 +125,7 @@ def test_news_source():
         for species in test_species:
             print(f"\n[CLIPBOARD] Testing news search for: {species}")
             try:
-                articles = client.search_species_news(species, max_articles=3)
+                articles = client.search_species_news(species, max_articles=20)
                 if articles:
                     print(f"[PASS] Successfully retrieved {len(articles)} news articles for {species}")
                     for i, article in enumerate(articles, 1):

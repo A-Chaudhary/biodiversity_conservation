@@ -30,6 +30,7 @@ class IUCNData(BaseModel):
     conservation_status: str
     population_trend: Optional[str] = None
     threats: List[str] = []
+    threat_details: List[Dict[str, str]] = []  # List of {"code": "1.1", "name": "Housing & urban areas"}
     assessment_date: Optional[str] = None
     assessment_history: List[Dict[str, Any]] = []
 
@@ -51,7 +52,7 @@ class IUCNClient:
         self.session = requests.Session()
         if self.api_token:
             self.session.headers.update({"Authorization": f"Bearer {self.api_token}"})
-        
+
         # Initialize cache if enabled
         self.enable_cache = enable_cache if enable_cache is not None else config.enable_cache
         if self.enable_cache:
@@ -60,6 +61,9 @@ class IUCNClient:
         else:
             self.cache = None
             logger.info(f"Initialized IUCN client with URL: {self.api_url} (caching disabled)")
+
+        # Cache for threats mapping (in-memory, loaded once)
+        self._threats_mapping: Optional[Dict[str, str]] = None
     
     def _get_cache_key(self, species_name: str) -> str:
         """Generate cache key for species."""
@@ -67,6 +71,76 @@ class IUCNClient:
         safe_name = species_name.lower().replace(" ", "_").replace("/", "_")
         key_hash = hashlib.md5(safe_name.encode()).hexdigest()[:8]
         return f"iucn_{safe_name}_{key_hash}"
+
+    def get_threats_mapping(self) -> Dict[str, str]:
+        """
+        Retrieve IUCN threats classification mapping.
+
+        Returns:
+            Dictionary mapping threat codes to their descriptions (e.g., {"1": "Residential & commercial development"})
+        """
+        # Return cached mapping if available
+        if self._threats_mapping is not None:
+            logger.debug("IUCN: Using cached threats mapping")
+            return self._threats_mapping
+
+        logger.info("IUCN: Fetching threats mapping from API")
+
+        if not self.api_token:
+            logger.warning("IUCN: No API token provided, request may be limited")
+
+        try:
+            endpoint = f"{self.api_url}/threats/"
+            logger.debug(f"IUCN: Making API request to {endpoint}")
+
+            response = self.session.get(endpoint, timeout=30)
+            response.raise_for_status()
+
+            data = response.json()
+            logger.debug(f"IUCN: Received threats mapping response")
+
+            # Parse the response - structure is {"threats": [{"code": "1", "description": {"en": "..."}}, ...]}
+            threats_list = data.get('threats', [])
+
+            if not threats_list:
+                logger.warning("IUCN: No threats found in API response")
+                self._threats_mapping = {}
+                return self._threats_mapping
+
+            # Build mapping: code -> English description
+            mapping = {}
+            for threat in threats_list:
+                if isinstance(threat, dict):
+                    code = threat.get('code')
+                    description_obj = threat.get('description', {})
+                    description = description_obj.get('en', '') if isinstance(description_obj, dict) else str(description_obj)
+
+                    if code:
+                        mapping[code] = description
+
+            logger.info(f"IUCN: Successfully loaded {len(mapping)} threat codes")
+
+            # Cache in memory
+            self._threats_mapping = mapping
+            return mapping
+
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 404:
+                logger.error(f"IUCN: Threats endpoint not found (404)")
+            elif e.response.status_code == 403:
+                logger.error(f"IUCN: Access forbidden (403) - check API token")
+            else:
+                logger.error(f"IUCN: HTTP error fetching threats mapping: {e}", exc_info=True)
+            return {}
+        except requests.exceptions.Timeout:
+            logger.error(f"IUCN: Request timeout for threats mapping")
+            return {}
+        except requests.exceptions.RequestException as e:
+            logger.error(f"IUCN: Request error for threats mapping: {e}", exc_info=True)
+            return {}
+        except Exception as e:
+            logger.error(f"IUCN: Unexpected error fetching threats mapping: {e}", exc_info=True)
+            return {}
 
     def get_species_data(self, species_name: str) -> Optional[IUCNData]:
         """
@@ -195,20 +269,37 @@ class IUCNClient:
 
             # Get threats data if available
             threats_list = []
+            threat_details = []
             threats_data = assessment.get('threats', [])
 
             if isinstance(threats_data, list):
                 for threat in threats_data:
                     if isinstance(threat, dict):
+                        # Extract threat code
+                        threat_code = threat.get('code', '')
+
                         # Try multiple fields for threat name
                         threat_name = (
                             threat.get('title') or
                             threat.get('name') or
-                            threat.get('code', 'Unknown threat')
+                            threat_code or
+                            'Unknown threat'
                         )
+
+                        # Add to legacy list (for backward compatibility)
                         threats_list.append(threat_name)
+
+                        # Add to detailed list with both code and name
+                        threat_details.append({
+                            'code': threat_code,
+                            'name': threat_name
+                        })
                     elif isinstance(threat, str):
                         threats_list.append(threat)
+                        threat_details.append({
+                            'code': '',
+                            'name': threat
+                        })
 
             logger.info(f"IUCN: Successfully retrieved data for '{species_name}' - {conservation_status}, {len(threats_list)} threats")
 
@@ -218,6 +309,7 @@ class IUCNClient:
                 conservation_status=conservation_status,
                 population_trend=population_trend_desc,
                 threats=threats_list,
+                threat_details=threat_details,
                 assessment_date=assessment_date,
                 assessment_history=assessment_history
             )
