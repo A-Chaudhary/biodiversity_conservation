@@ -387,21 +387,76 @@ def main():
     st.markdown("---")
     st.subheader("Example Species")
 
-    example_col1, example_col2, example_col3 = st.columns(3)
+    # Row 1: Mammals
+    st.markdown("**Mammals**")
+    example_row1_col1, example_row1_col2, example_row1_col3, example_row1_col4 = st.columns(4)
 
-    with example_col1:
+    with example_row1_col1:
         if st.button("🐅 Tiger (Panthera tigris)", use_container_width=True):
             st.session_state.species_name = "Panthera tigris"
             st.rerun()
 
-    with example_col2:
+    with example_row1_col2:
         if st.button("🐼 Giant Panda (Ailuropoda melanoleuca)", use_container_width=True):
             st.session_state.species_name = "Ailuropoda melanoleuca"
             st.rerun()
 
-    with example_col3:
+    with example_row1_col3:
         if st.button("🦍 Mountain Gorilla (Gorilla beringei)", use_container_width=True):
             st.session_state.species_name = "Gorilla beringei"
+            st.rerun()
+
+    with example_row1_col4:
+        if st.button("🐘 African Elephant (Loxodonta africana)", use_container_width=True):
+            st.session_state.species_name = "Loxodonta africana"
+            st.rerun()
+
+    # Row 2: Marine & Reptiles
+    st.markdown("**Marine & Reptiles**")
+    example_row2_col1, example_row2_col2, example_row2_col3, example_row2_col4 = st.columns(4)
+
+    with example_row2_col1:
+        if st.button("🐢 Hawksbill Turtle (Eretmochelys imbricata)", use_container_width=True):
+            st.session_state.species_name = "Eretmochelys imbricata"
+            st.rerun()
+
+    with example_row2_col2:
+        if st.button("🦈 Great White Shark (Carcharodon carcharias)", use_container_width=True):
+            st.session_state.species_name = "Carcharodon carcharias"
+            st.rerun()
+
+    with example_row2_col3:
+        if st.button("🐊 American Alligator (Alligator mississippiensis)", use_container_width=True):
+            st.session_state.species_name = "Alligator mississippiensis"
+            st.rerun()
+
+    with example_row2_col4:
+        if st.button("🐍 King Cobra (Ophiophagus hannah)", use_container_width=True):
+            st.session_state.species_name = "Ophiophagus hannah"
+            st.rerun()
+
+    # Row 3: Birds & Amphibians
+    st.markdown("**Birds & Amphibians**")
+    example_row3_col1, example_row3_col2, example_row3_col3, example_row3_col4 = st.columns(4)
+
+    with example_row3_col1:
+        if st.button("🦅 Bald Eagle (Haliaeetus leucocephalus)", use_container_width=True):
+            st.session_state.species_name = "Haliaeetus leucocephalus"
+            st.rerun()
+
+    with example_row3_col2:
+        if st.button("🦜 Kakapo (Strigops habroptilus)", use_container_width=True):
+            st.session_state.species_name = "Strigops habroptilus"
+            st.rerun()
+
+    with example_row3_col3:
+        if st.button("🐸 Golden Poison Frog (Phyllobates terribilis)", use_container_width=True):
+            st.session_state.species_name = "Phyllobates terribilis"
+            st.rerun()
+
+    with example_row3_col4:
+        if st.button("🦎 Komodo Dragon (Varanus komodoensis)", use_container_width=True):
+            st.session_state.species_name = "Varanus komodoensis"
             st.rerun()
 
 if __name__ == "__main__":
