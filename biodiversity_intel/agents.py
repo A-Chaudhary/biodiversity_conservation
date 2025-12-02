@@ -41,11 +41,12 @@ class DataAgent(BaseAgent):
         super().__init__("Data Agent")
 
     async def execute(self, state: Dict[str, Any]) -> Dict[str, Any]:
-        """Retrieve data for a given species."""
+        """Retrieve data for a given species with parallel API calls."""
+        import asyncio
         from biodiversity_intel.data_sources import IUCNClient, GBIFClient, MongabayClient
 
         species_name = state.get("species_name", "Unknown")
-        logger.info(f"DataAgent: Starting data retrieval for species '{species_name}'")
+        logger.info(f"DataAgent: Starting parallel data retrieval for species '{species_name}'")
 
         try:
             # Initialize API clients
@@ -54,37 +55,65 @@ class DataAgent(BaseAgent):
             gbif_client = GBIFClient()
             news_client = MongabayClient()
 
-            # Fetch IUCN data
-            logger.debug(f"DataAgent: Fetching IUCN data for {species_name}")
-            iucn_data = iucn_client.get_species_data(species_name)
-            if iucn_data:
+            # Define async wrapper functions for parallel execution
+            async def fetch_iucn():
+                """Fetch IUCN data in executor to avoid blocking."""
+                loop = asyncio.get_event_loop()
+                return await loop.run_in_executor(None, iucn_client.get_species_data, species_name)
+
+            async def fetch_gbif():
+                """Fetch GBIF data in executor to avoid blocking."""
+                loop = asyncio.get_event_loop()
+                return await loop.run_in_executor(None, gbif_client.get_occurrences, species_name)
+
+            async def fetch_news():
+                """Fetch news data in executor to avoid blocking."""
+                loop = asyncio.get_event_loop()
+                return await loop.run_in_executor(None, news_client.search_species_news, species_name, 5)
+
+            # Fetch all data sources in parallel
+            logger.debug(f"DataAgent: Executing parallel API calls for {species_name}")
+            iucn_data, gbif_data, news_articles = await asyncio.gather(
+                fetch_iucn(),
+                fetch_gbif(),
+                fetch_news(),
+                return_exceptions=True
+            )
+
+            # Process IUCN data
+            if isinstance(iucn_data, Exception):
+                logger.error(f"DataAgent: Error fetching IUCN data: {iucn_data}")
+                state["iucn_data"] = {}
+            elif iucn_data:
                 state["iucn_data"] = iucn_data.model_dump()
                 logger.info(f"DataAgent: IUCN data retrieved - Status: {iucn_data.conservation_status}, Threats: {len(iucn_data.threats)}")
             else:
                 state["iucn_data"] = {}
                 logger.warning(f"DataAgent: No IUCN data found for {species_name}")
 
-            # Fetch GBIF data
-            logger.debug(f"DataAgent: Fetching GBIF data for {species_name}")
-            gbif_data = gbif_client.get_occurrences(species_name)
-            if gbif_data:
+            # Process GBIF data
+            if isinstance(gbif_data, Exception):
+                logger.error(f"DataAgent: Error fetching GBIF data: {gbif_data}")
+                state["gbif_data"] = {}
+            elif gbif_data:
                 state["gbif_data"] = gbif_data.model_dump()
                 logger.info(f"DataAgent: GBIF data retrieved - Occurrences: {gbif_data.occurrence_count}")
             else:
                 state["gbif_data"] = {}
                 logger.warning(f"DataAgent: No GBIF data found for {species_name}")
 
-            # Fetch news data
-            logger.debug(f"DataAgent: Fetching news data for {species_name}")
-            news_articles = news_client.search_species_news(species_name, max_articles=5)
-            if news_articles:
+            # Process news data
+            if isinstance(news_articles, Exception):
+                logger.error(f"DataAgent: Error fetching news data: {news_articles}")
+                state["news_data"] = []
+            elif news_articles:
                 state["news_data"] = news_articles
                 logger.info(f"DataAgent: News data retrieved - Articles: {len(news_articles)}")
             else:
                 state["news_data"] = []
                 logger.warning(f"DataAgent: No news articles found for {species_name}")
 
-            logger.info(f"DataAgent: Successfully completed data retrieval for '{species_name}'")
+            logger.info(f"DataAgent: Successfully completed parallel data retrieval for '{species_name}'")
             return state
 
         except Exception as e:

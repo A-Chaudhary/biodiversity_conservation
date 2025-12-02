@@ -10,8 +10,14 @@ This module provides clients for interacting with biodiversity data APIs:
 import os
 import requests
 import logging
+import hashlib
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+
+from biodiversity_intel.storage import FileCache
+from biodiversity_intel.config import config
 
 logger = logging.getLogger("biodiversity_intel.data_sources")
 
@@ -35,19 +41,34 @@ class GBIFData(BaseModel):
 
 
 class IUCNClient:
-    """Client for IUCN Red List API."""
+    """Client for IUCN Red List API with caching support."""
 
-    def __init__(self, api_url: Optional[str] = None, api_token: Optional[str] = None):
+    def __init__(self, api_url: Optional[str] = None, api_token: Optional[str] = None, enable_cache: bool = None):
         self.api_url = api_url or os.getenv("IUCN_API_URL", "https://api.iucnredlist.org/api/v4")
         self.api_token = api_token or os.getenv("IUCN_API_TOKEN")
         self.session = requests.Session()
         if self.api_token:
             self.session.headers.update({"Authorization": f"Bearer {self.api_token}"})
-        logger.info(f"Initialized IUCN client with URL: {self.api_url}")
+        
+        # Initialize cache if enabled
+        self.enable_cache = enable_cache if enable_cache is not None else config.enable_cache
+        if self.enable_cache:
+            self.cache = FileCache(cache_dir="data/cache/iucn")
+            logger.info(f"Initialized IUCN client with URL: {self.api_url} (caching enabled)")
+        else:
+            self.cache = None
+            logger.info(f"Initialized IUCN client with URL: {self.api_url} (caching disabled)")
+    
+    def _get_cache_key(self, species_name: str) -> str:
+        """Generate cache key for species."""
+        # Create a safe cache key from species name
+        safe_name = species_name.lower().replace(" ", "_").replace("/", "_")
+        key_hash = hashlib.md5(safe_name.encode()).hexdigest()[:8]
+        return f"iucn_{safe_name}_{key_hash}"
 
     def get_species_data(self, species_name: str) -> Optional[IUCNData]:
         """
-        Retrieve IUCN data for a species.
+        Retrieve IUCN data for a species with caching support.
 
         Args:
             species_name: Scientific name of the species
@@ -55,7 +76,18 @@ class IUCNClient:
         Returns:
             IUCNData object or None if not found
         """
-        logger.info(f"IUCN: Fetching data for species '{species_name}'")
+        # Check cache first
+        if self.enable_cache and self.cache:
+            cache_key = self._get_cache_key(species_name)
+            cached_data = self.cache.get(cache_key)
+            if cached_data:
+                logger.info(f"IUCN: Cache hit for species '{species_name}'")
+                try:
+                    return IUCNData(**cached_data)
+                except Exception as e:
+                    logger.warning(f"IUCN: Failed to deserialize cached data: {e}, fetching fresh data")
+        
+        logger.info(f"IUCN: Fetching data for species '{species_name}' (cache miss)")
 
         if not self.api_token:
             logger.warning("IUCN: No API token provided, request may be limited")
@@ -178,7 +210,8 @@ class IUCNClient:
 
             logger.info(f"IUCN: Successfully retrieved data for '{species_name}' - {conservation_status}, {len(threats_list)} threats")
 
-            return IUCNData(
+            # Build IUCNData object
+            iucn_data = IUCNData(
                 scientific_name=scientific_name,
                 conservation_status=conservation_status,
                 population_trend=population_trend_desc,
@@ -186,6 +219,17 @@ class IUCNClient:
                 assessment_date=assessment_date,
                 assessment_history=assessment_history
             )
+            
+            # Save to cache
+            if self.enable_cache and self.cache:
+                cache_key = self._get_cache_key(species_name)
+                try:
+                    self.cache.set(cache_key, iucn_data.model_dump())
+                    logger.debug(f"IUCN: Cached data for '{species_name}'")
+                except Exception as e:
+                    logger.warning(f"IUCN: Failed to cache data: {e}")
+            
+            return iucn_data
 
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
@@ -209,15 +253,29 @@ class IUCNClient:
 
 
 class GBIFClient:
-    """Client for GBIF Occurrence API."""
+    """Client for GBIF Occurrence API with caching support."""
 
-    def __init__(self, api_url: Optional[str] = None):
+    def __init__(self, api_url: Optional[str] = None, enable_cache: bool = None):
         self.api_url = api_url or os.getenv("GBIF_API_URL", "https://api.gbif.org/v1")
-        logger.info(f"Initialized GBIF client with URL: {self.api_url}")
+        
+        # Initialize cache if enabled
+        self.enable_cache = enable_cache if enable_cache is not None else config.enable_cache
+        if self.enable_cache:
+            self.cache = FileCache(cache_dir="data/cache/gbif")
+            logger.info(f"Initialized GBIF client with URL: {self.api_url} (caching enabled)")
+        else:
+            self.cache = None
+            logger.info(f"Initialized GBIF client with URL: {self.api_url} (caching disabled)")
+    
+    def _get_cache_key(self, species_name: str, limit: int = 10000) -> str:
+        """Generate cache key for species."""
+        safe_name = species_name.lower().replace(" ", "_").replace("/", "_")
+        key_hash = hashlib.md5(f"{safe_name}_{limit}".encode()).hexdigest()[:8]
+        return f"gbif_{safe_name}_{key_hash}"
 
     def get_occurrences(self, species_name: str, limit: int = 10_000) -> Optional[GBIFData]:
         """
-        Retrieve GBIF occurrence data for a species.
+        Retrieve GBIF occurrence data for a species with caching support.
 
         Args:
             species_name: Scientific name of the species
@@ -226,7 +284,18 @@ class GBIFClient:
         Returns:
             GBIFData object or None if not found
         """
-        logger.info(f"GBIF: Fetching occurrence data for species '{species_name}' (limit: {limit})")
+        # Check cache first
+        if self.enable_cache and self.cache:
+            cache_key = self._get_cache_key(species_name, limit)
+            cached_data = self.cache.get(cache_key)
+            if cached_data:
+                logger.info(f"GBIF: Cache hit for species '{species_name}'")
+                try:
+                    return GBIFData(**cached_data)
+                except Exception as e:
+                    logger.warning(f"GBIF: Failed to deserialize cached data: {e}, fetching fresh data")
+        
+        logger.info(f"GBIF: Fetching occurrence data for species '{species_name}' (limit: {limit}, cache miss)")
 
         try:
             # Step 1: Get species key by matching scientific name
@@ -266,50 +335,77 @@ class GBIFClient:
                 logger.warning(f"GBIF: No occurrences found for '{species_name}'")
                 return None
 
-            # Step 3: Fetch all occurrence records using pagination
+            # Step 3: Fetch all occurrence records using parallel pagination
             # GBIF API limits: max 300 per request, max offset 100,000
+            # Improvement: Parallel requests instead of sequential while loop
             MAX_LIMIT_PER_REQUEST = 300
             MAX_OFFSET = 100000
+            MAX_CONCURRENT_REQUESTS = 5  # Limit concurrent requests to respect rate limits
+            REQUEST_DELAY = 0.1  # Small delay between batches (seconds) to respect rate limits
 
             # Determine how many records to fetch (respecting max offset limit)
             records_to_fetch = min(total_count, limit, MAX_OFFSET)
 
-            logger.info(f"GBIF: Fetching {records_to_fetch} occurrence records (total available: {total_count})")
+            logger.info(f"GBIF: Fetching {records_to_fetch} occurrence records (total available: {total_count}) using parallel pagination")
 
+            # Calculate number of batches needed
+            num_batches = (records_to_fetch + MAX_LIMIT_PER_REQUEST - 1) // MAX_LIMIT_PER_REQUEST
+            
+            def fetch_batch(offset: int, batch_limit: int) -> List[Dict[str, Any]]:
+                """Fetch a single batch of occurrence records."""
+                try:
+                    # Small delay to respect rate limits
+                    time.sleep(REQUEST_DELAY)
+                    
+                    occurrence_params = {
+                        "taxonKey": species_key,
+                        "limit": batch_limit,
+                        "offset": offset
+                    }
+                    
+                    logger.debug(f"GBIF: Fetching batch at offset {offset} with limit {batch_limit}")
+                    occurrence_response = requests.get(count_endpoint, params=occurrence_params, timeout=30)
+                    occurrence_response.raise_for_status()
+                    occurrence_data = occurrence_response.json()
+                    
+                    batch_results = occurrence_data.get("results", [])
+                    logger.debug(f"GBIF: Retrieved {len(batch_results)} records from offset {offset}")
+                    return batch_results
+                except Exception as e:
+                    logger.warning(f"GBIF: Error fetching batch at offset {offset}: {e}")
+                    return []
+
+            # Fetch batches in parallel with limited concurrency
             all_results = []
-            offset = 0
-
-            while offset < records_to_fetch:
-                # Calculate how many records to request in this batch
-                remaining = records_to_fetch - offset
-                batch_limit = min(MAX_LIMIT_PER_REQUEST, remaining)
-
-                logger.debug(f"GBIF: Fetching batch at offset {offset} with limit {batch_limit}")
-
-                occurrence_params = {
-                    "taxonKey": species_key,
-                    "limit": batch_limit,
-                    "offset": offset
+            offsets = [i * MAX_LIMIT_PER_REQUEST for i in range(num_batches)]
+            
+            with ThreadPoolExecutor(max_workers=MAX_CONCURRENT_REQUESTS) as executor:
+                # Submit all batch requests
+                future_to_offset = {
+                    executor.submit(
+                        fetch_batch, 
+                        offset, 
+                        min(MAX_LIMIT_PER_REQUEST, records_to_fetch - offset)
+                    ): offset 
+                    for offset in offsets
                 }
-
-                occurrence_response = requests.get(count_endpoint, params=occurrence_params, timeout=30)
-                occurrence_response.raise_for_status()
-                occurrence_data = occurrence_response.json()
-
-                batch_results = occurrence_data.get("results", [])
-
-                if not batch_results:
-                    logger.debug(f"GBIF: No more results returned at offset {offset}")
-                    break
-
-                all_results.extend(batch_results)
-                logger.debug(f"GBIF: Retrieved {len(batch_results)} records in this batch (total so far: {len(all_results)})")
-
-                # Move to next batch
-                offset += batch_limit
-
+                
+                # Collect results as they complete
+                for future in as_completed(future_to_offset):
+                    offset = future_to_offset[future]
+                    try:
+                        batch_results = future.result()
+                        if batch_results:
+                            all_results.extend(batch_results)
+                        else:
+                            logger.debug(f"GBIF: No results returned at offset {offset}")
+                    except Exception as e:
+                        logger.error(f"GBIF: Error processing batch at offset {offset}: {e}")
+            
+            # Sort results by offset to maintain order (optional, but good for consistency)
+            # Note: Results are already in order since we process by offset, but this ensures consistency
             results = all_results
-            logger.info(f"GBIF: Successfully retrieved {len(results)} occurrence records")
+            logger.info(f"GBIF: Successfully retrieved {len(results)} occurrence records using parallel pagination ({num_batches} batches)")
 
             # Step 4: Analyze temporal distribution (by year)
             temporal_dist = {}
@@ -337,12 +433,24 @@ class GBIFClient:
             logger.info(f"GBIF: Analyzed temporal distribution - {len(temporal_dist)} years")
             # logger.info(f"GBIF: Analyzed spatial distribution - {len(spatial_dist)} locations")  # Spatial disabled
 
-            return GBIFData(
+            # Build GBIFData object
+            gbif_data = GBIFData(
                 scientific_name=matched_name,
                 occurrence_count=total_count,
                 temporal_distribution=temporal_dist,
                 spatial_distribution=spatial_dist
             )
+            
+            # Save to cache
+            if self.enable_cache and self.cache:
+                cache_key = self._get_cache_key(species_name, limit)
+                try:
+                    self.cache.set(cache_key, gbif_data.model_dump())
+                    logger.debug(f"GBIF: Cached data for '{species_name}'")
+                except Exception as e:
+                    logger.warning(f"GBIF: Failed to cache data: {e}")
+            
+            return gbif_data
 
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
@@ -363,12 +471,26 @@ class GBIFClient:
 
 
 class MongabayClient:
-    """Client for Mongabay conservation news via RSS feed."""
+    """Client for Mongabay conservation news via RSS feed with caching support."""
 
-    def __init__(self):
+    def __init__(self, enable_cache: bool = None):
         self.base_url = "https://news.mongabay.com"
         self.rss_url = f"{self.base_url}/?feed=custom"
-        logger.info(f"Initialized Mongabay RSS client")
+        
+        # Initialize cache if enabled
+        self.enable_cache = enable_cache if enable_cache is not None else config.enable_cache
+        if self.enable_cache:
+            self.cache = FileCache(cache_dir="data/cache/news")
+            logger.info(f"Initialized Mongabay RSS client (caching enabled)")
+        else:
+            self.cache = None
+            logger.info(f"Initialized Mongabay RSS client (caching disabled)")
+    
+    def _get_cache_key(self, species_name: str, max_articles: int = 5) -> str:
+        """Generate cache key for species news."""
+        safe_name = species_name.lower().replace(" ", "_").replace("/", "_")
+        key_hash = hashlib.md5(f"{safe_name}_{max_articles}".encode()).hexdigest()[:8]
+        return f"news_{safe_name}_{key_hash}"
 
     def search_species_news(self, species_name: str, max_articles: int = 5) -> List[Dict[str, str]]:
         """
@@ -381,7 +503,15 @@ class MongabayClient:
         Returns:
             List of article dictionaries with title, url, summary, and pub_date
         """
-        logger.info(f"Mongabay: Searching RSS feed for species '{species_name}' (max: {max_articles})")
+        # Check cache first
+        if self.enable_cache and self.cache:
+            cache_key = self._get_cache_key(species_name, max_articles)
+            cached_data = self.cache.get(cache_key)
+            if cached_data:
+                logger.info(f"Mongabay: Cache hit for species '{species_name}'")
+                return cached_data
+        
+        logger.info(f"Mongabay: Searching RSS feed for species '{species_name}' (max: {max_articles}, cache miss)")
 
         try:
             # Import XML parser
@@ -453,6 +583,15 @@ class MongabayClient:
                 logger.info(f"Mongabay: Successfully retrieved {len(articles)} news articles for '{species_name}'")
             else:
                 logger.warning(f"Mongabay: No articles extracted from RSS for '{species_name}'")
+
+            # Save to cache
+            if self.enable_cache and self.cache:
+                cache_key = self._get_cache_key(species_name, max_articles)
+                try:
+                    self.cache.set(cache_key, articles)
+                    logger.debug(f"Mongabay: Cached {len(articles)} articles for '{species_name}'")
+                except Exception as e:
+                    logger.warning(f"Mongabay: Failed to cache articles: {e}")
 
             return articles
 
