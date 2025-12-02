@@ -69,7 +69,7 @@ class DataAgent(BaseAgent):
             async def fetch_news():
                 """Fetch news data in executor to avoid blocking."""
                 loop = asyncio.get_event_loop()
-                return await loop.run_in_executor(None, news_client.search_species_news, species_name, 5)
+                return await loop.run_in_executor(None, news_client.search_species_news, species_name, 20)
 
             # Fetch all data sources in parallel
             logger.debug(f"DataAgent: Executing parallel API calls for {species_name}")
