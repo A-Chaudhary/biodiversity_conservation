@@ -48,31 +48,92 @@ class Cache:
 
 
 class FileCache:
-    """File-based cache for persistent storage."""
+    """File-based cache for persistent storage with TTL support."""
 
-    def __init__(self, cache_dir: str = "data/cache"):
+    def __init__(self, cache_dir: str = "data/cache", ttl_days: int = 7):
         """
         Initialize file cache.
 
         Args:
             cache_dir: Directory for cache files
+            ttl_days: Time-to-live in days (default: 7 days = 1 week)
         """
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.ttl_seconds = ttl_days * 24 * 60 * 60  # Convert days to seconds
 
     def get(self, key: str) -> Optional[Dict[str, Any]]:
-        """Retrieve cached data from file."""
+        """
+        Retrieve cached data from file if not expired.
+        
+        Args:
+            key: Cache key (species name)
+            
+        Returns:
+            Cached data if valid and not expired, None otherwise
+        """
         cache_file = self.cache_dir / f"{key}.json"
-        if cache_file.exists():
+        if not cache_file.exists():
+            return None
+        
+        try:
             with open(cache_file, 'r') as f:
-                return json.load(f)
-        return None
+                cache_data = json.load(f)
+            
+            # Check if cache has timestamp (new format) or is old format
+            if isinstance(cache_data, dict) and '_cached_at' in cache_data:
+                # New format with timestamp
+                cached_at = datetime.fromisoformat(cache_data['_cached_at'])
+                age = datetime.now() - cached_at
+                
+                if age.total_seconds() > self.ttl_seconds:
+                    # Cache expired, delete file and return None
+                    cache_file.unlink()
+                    return None
+                
+                # Return the actual data (without metadata)
+                return cache_data.get('data')
+            else:
+                # Old format without timestamp - check file modification time
+                file_mtime = datetime.fromtimestamp(cache_file.stat().st_mtime)
+                age = datetime.now() - file_mtime
+                
+                if age.total_seconds() > self.ttl_seconds:
+                    # Cache expired, delete file and return None
+                    cache_file.unlink()
+                    return None
+                
+                # Return old format data (backward compatibility)
+                return cache_data
+        except (json.JSONDecodeError, OSError, ValueError) as e:
+            # If file is corrupted or can't be read, delete it
+            if cache_file.exists():
+                cache_file.unlink()
+            return None
 
     def set(self, key: str, value: Dict[str, Any]) -> None:
-        """Store data to cache file."""
+        """
+        Store data to cache file with timestamp.
+        
+        Args:
+            key: Cache key (species name)
+            value: Data to cache
+        """
         cache_file = self.cache_dir / f"{key}.json"
-        with open(cache_file, 'w') as f:
-            json.dump(value, f, indent=2)
+        
+        # Wrap data with timestamp metadata
+        cache_data = {
+            '_cached_at': datetime.now().isoformat(),
+            'data': value
+        }
+        
+        try:
+            with open(cache_file, 'w') as f:
+                json.dump(cache_data, f, indent=2)
+        except OSError as e:
+            # If we can't write, log but don't fail
+            import logging
+            logging.warning(f"Failed to cache data for key '{key}': {e}")
 
 
 class Database:
