@@ -14,10 +14,13 @@ from pydantic import BaseModel, Field
 from datetime import datetime
 import warnings
 import logging
+import hashlib
 warnings.filterwarnings('ignore')
 
 import torch
 from chronos import ChronosPipeline
+from biodiversity_intel.storage import FileCache
+from biodiversity_intel.config import config
 
 logger = logging.getLogger("biodiversity_intel.anomaly_detection")
 
@@ -69,7 +72,8 @@ class GBIFAnomalyDetector:
         context_length: int = 12,
         forecast_horizon: int = 3,
         anomaly_threshold: float = 2.0,
-        device: Optional[str] = None
+        device: Optional[str] = None,
+        enable_cache: Optional[bool] = None
     ):
         """
         Initialize detector with pretrained Chronos model.
@@ -80,10 +84,21 @@ class GBIFAnomalyDetector:
             forecast_horizon: Years to forecast ahead
             anomaly_threshold: Z-score threshold for anomaly detection
             device: Device for model ('cpu', 'cuda', or None for auto-detect)
+            enable_cache: Enable/disable result caching (None uses config default)
         """
         self.context_length = context_length
         self.forecast_horizon = forecast_horizon
         self.anomaly_threshold = anomaly_threshold
+        self.model_size = model_size
+
+        # Initialize cache if enabled
+        self.enable_cache = enable_cache if enable_cache is not None else config.enable_cache
+        if self.enable_cache:
+            self.cache = FileCache(cache_dir="data/cache/anomaly")
+            logger.info(f"Initialized anomaly detector (caching enabled)")
+        else:
+            self.cache = None
+            logger.info(f"Initialized anomaly detector (caching disabled)")
 
         # Auto-detect GPU availability if device not specified
         if device is None:
@@ -120,6 +135,18 @@ class GBIFAnomalyDetector:
             allocated = torch.cuda.memory_allocated(0) / 1024**3
             reserved = torch.cuda.memory_reserved(0) / 1024**3
             logger.debug(f"GPU memory - Allocated: {allocated:.2f} GB, Reserved: {reserved:.2f} GB")
+
+    def _get_cache_key(self, species_name: str) -> str:
+        """
+        Generate cache key for species anomaly detection results.
+        Includes model parameters to ensure cache invalidation when settings change.
+        """
+        # Create a safe cache key from species name and model parameters
+        safe_name = species_name.lower().replace(" ", "_").replace("/", "_")
+        # Include model parameters in hash to invalidate cache when settings change
+        params_str = f"{self.model_size}_{self.context_length}_{self.forecast_horizon}_{self.anomaly_threshold}"
+        key_hash = hashlib.md5(f"{safe_name}_{params_str}".encode()).hexdigest()[:8]
+        return f"anomaly_{safe_name}_{key_hash}"
 
     def parse_gbif_json(self, gbif_json: Dict) -> Tuple[str, pd.DataFrame]:
         """
@@ -580,7 +607,7 @@ class GBIFAnomalyDetector:
 
     def analyze(self, gbif_json: Dict, show_plot: bool = True) -> Dict:
         """
-        Complete analysis pipeline for a single species.
+        Complete analysis pipeline for a single species with caching support.
 
         Args:
             gbif_json: GBIF occurrence data dictionary
@@ -589,6 +616,46 @@ class GBIFAnomalyDetector:
         Returns:
             Dictionary containing all analysis results
         """
+        # Parse species name first for cache lookup
+        species_name = gbif_json["data"]["scientific_name"]
+
+        # Check cache first
+        if self.enable_cache and self.cache:
+            cache_key = self._get_cache_key(species_name)
+            cached_data = self.cache.get(cache_key)
+            if cached_data:
+                logger.info(f"Anomaly detection: Cache hit for species '{species_name}'")
+                # Reconstruct results from cached data
+                try:
+                    # Deserialize dataframes from records
+                    cached_data['time_series'] = pd.DataFrame(cached_data.get('time_series', []))
+                    if cached_data.get('anomaly_results'):
+                        cached_data['anomaly_results'] = pd.DataFrame(cached_data['anomaly_results'])
+
+                    # Reconstruct figure from JSON
+                    if cached_data.get('figure_json'):
+                        import plotly.io as pio
+                        cached_data['figure'] = pio.from_json(cached_data['figure_json'])
+                    else:
+                        cached_data['figure'] = None
+
+                    # Reconstruct structured results
+                    if cached_data.get('structured_results'):
+                        sr = cached_data['structured_results']
+                        cached_data['structured_results'] = AnomalyResults(
+                            species_name=sr['species_name'],
+                            summary_stats=TimeSeriesStats(**sr['summary_stats']),
+                            num_anomalies=sr['num_anomalies'],
+                            num_declines=sr['num_declines'],
+                            num_surges=sr['num_surges'],
+                            episodes=[AnomalyEpisode(**ep) for ep in sr['episodes']]
+                        )
+
+                    return cached_data
+                except Exception as e:
+                    logger.warning(f"Anomaly detection: Failed to deserialize cached data: {e}, running fresh analysis")
+
+        logger.info(f"Anomaly detection: Cache miss for species '{species_name}', running analysis")
         logger.info("="*80)
         logger.info("GBIF OCCURRENCE ANOMALY DETECTION")
         logger.info("="*80)
@@ -708,7 +775,8 @@ class GBIFAnomalyDetector:
    shifts in occurrence could appear as temporal anomalies.
         """)
 
-        return {
+        # Prepare results
+        results = {
             'species_name': species_name,
             'time_series': df,
             'summary_stats': stats,
@@ -718,6 +786,28 @@ class GBIFAnomalyDetector:
             'figure': fig,
             'structured_results': results_obj
         }
+
+        # Cache results if enabled
+        if self.enable_cache and self.cache:
+            cache_key = self._get_cache_key(species_name)
+            try:
+                # Prepare cacheable version (serialize complex objects)
+                cache_data = {
+                    'species_name': species_name,
+                    'time_series': df.to_dict('records') if df is not None else [],
+                    'summary_stats': stats.model_dump() if stats else {},
+                    'backtest_results': backtest_df.to_dict('records') if backtest_df is not None else [],
+                    'anomaly_results': anomaly_df.to_dict('records') if anomaly_df is not None and len(anomaly_df) > 0 else None,
+                    'episodes': [ep.model_dump() for ep in episodes] if episodes else [],
+                    'figure_json': fig.to_json() if fig is not None else None,
+                    'structured_results': results_obj.model_dump() if results_obj else None
+                }
+                self.cache.set(cache_key, cache_data)
+                logger.debug(f"Anomaly detection: Cached results for species '{species_name}'")
+            except Exception as e:
+                logger.warning(f"Anomaly detection: Failed to cache results: {e}")
+
+        return results
 
 
 def main():
