@@ -25,6 +25,7 @@ class ConservationState(TypedDict):
     confidence_score: float
     early_warning: bool
     report: str
+    anomaly_detection: Dict[str, Any]  # Anomaly detection results from time-series analysis
 
 
 def build_conservation_workflow() -> StateGraph:
@@ -91,7 +92,8 @@ async def run_conservation_analysis(species_name: str) -> Dict[str, Any]:
             population_trend="unknown",
             confidence_score=0.0,
             early_warning=False,
-            report=""
+            report="",
+            anomaly_detection={}
         )
 
         logger.info(f"Invoking workflow for '{species_name}'")

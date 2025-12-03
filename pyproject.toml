@@ -28,6 +28,9 @@ dependencies = [
     "tenacity>=8.0.0",
     "pyyaml>=6.0.0",
     "mcp>=1.0.0",
+    "chronos-forecasting>=2.2.0",
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
 ]
 
 [project.optional-dependencies]
@@ -86,3 +89,12 @@ python_version = "3.10"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = false
+
+[[tool.uv.index]]
+name = "pytorch-cu118"
+url = "https://download.pytorch.org/whl/cu118"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu118" }
+torchvision = { index = "pytorch-cu118" }

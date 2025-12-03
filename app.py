@@ -222,10 +222,11 @@ def main():
         st.success(f"Analysis complete for {analyzed_species}")
 
         # Create tabs for different views
-        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
             "📊 Summary",
             "🚨 Threats",
             "🔬 Analysis",
+            "📉 Anomaly Detection",
             "📈 Data Sources",
             "📄 Full Report"
         ])
@@ -298,6 +299,137 @@ def main():
                 st.info("Analysis not available in results.")
 
         with tab4:
+            st.header("Time-Series Anomaly Detection")
+
+            # Get anomaly detection results from state
+            anomaly_data = result.get('anomaly_detection')
+
+            if anomaly_data and anomaly_data.get('summary_stats'):
+                # Display summary metrics
+                st.subheader("📊 Summary Statistics")
+
+                summary_stats = anomaly_data['summary_stats']
+                col1, col2, col3, col4 = st.columns(4)
+
+                with col1:
+                    st.metric("Years Analyzed", summary_stats.get('num_years', 0))
+                with col2:
+                    st.metric("Total Occurrences", summary_stats.get('total_occurrences', 0))
+                with col3:
+                    trend_direction = summary_stats.get('trend_direction', 'Unknown')
+                    trend_icon = "📈" if trend_direction == "increasing" else "📉" if trend_direction == "decreasing" else "➡️"
+                    st.metric("Trend", f"{trend_icon} {trend_direction.title()}")
+                with col4:
+                    st.metric("Anomalies Found", anomaly_data.get('num_anomalies', 0))
+
+                # Display year range and trend
+                st.markdown(f"**Year Range:** {summary_stats.get('year_range', 'N/A')}")
+                st.markdown(f"**Mean Annual Count:** {summary_stats.get('mean_count', 0):.2f}")
+                st.markdown(f"**Trend Slope:** {summary_stats.get('trend_slope', 0):.4f}")
+
+                st.markdown("---")
+
+                # Display visualization
+                st.subheader("📉 Occurrence Time Series with Anomalies")
+
+                if anomaly_data.get('figure_json'):
+                    # Deserialize Plotly figure from JSON
+                    import plotly.io as pio
+                    fig = pio.from_json(anomaly_data['figure_json'])
+                    st.plotly_chart(fig, use_container_width=True)
+                else:
+                    st.info("Visualization not available")
+
+                st.markdown("---")
+
+                # Display anomaly episodes
+                st.subheader("🚨 Detected Anomaly Episodes")
+
+                episodes = anomaly_data.get('episodes', [])
+                num_declines = anomaly_data.get('num_declines', 0)
+                num_surges = anomaly_data.get('num_surges', 0)
+
+                if episodes:
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.metric("Decline Episodes", num_declines, delta=None, delta_color="inverse")
+                    with col2:
+                        st.metric("Surge Episodes", num_surges, delta=None, delta_color="normal")
+
+                    st.markdown("---")
+
+                    # Group episodes by type
+                    decline_episodes = [ep for ep in episodes if ep.get('type') == 'decline']
+                    surge_episodes = [ep for ep in episodes if ep.get('type') == 'surge']
+
+                    # Display decline episodes
+                    if decline_episodes:
+                        st.markdown("### 📉 Decline Anomalies")
+                        st.markdown("*Periods where observation counts were significantly LOWER than expected*")
+
+                        for i, ep in enumerate(decline_episodes, 1):
+                            year_span = f"{ep['start_year']}" if ep['start_year'] == ep['end_year'] else f"{ep['start_year']}-{ep['end_year']}"
+
+                            with st.expander(f"**Episode {i}: {year_span}** (Duration: {ep['num_years']} year(s))", expanded=(i <= 3)):
+                                col1, col2 = st.columns(2)
+                                with col1:
+                                    st.metric("Years", year_span)
+                                    st.metric("Duration", f"{ep['num_years']} year(s)")
+                                with col2:
+                                    st.metric("Max |Z-score|", f"{ep['max_abs_z']:.2f}")
+                                    st.metric("Mean Residual", f"{ep['mean_residual']:.3f}")
+
+                                st.warning("⚠️ **Interpretation:** Observation counts were significantly lower than model predictions. This may indicate reduced sampling effort, population decline, or geographic range shift.")
+
+                    # Display surge episodes
+                    if surge_episodes:
+                        st.markdown("### 📈 Surge Anomalies")
+                        st.markdown("*Periods where observation counts were significantly HIGHER than expected*")
+
+                        for i, ep in enumerate(surge_episodes, 1):
+                            year_span = f"{ep['start_year']}" if ep['start_year'] == ep['end_year'] else f"{ep['start_year']}-{ep['end_year']}"
+
+                            with st.expander(f"**Episode {i}: {year_span}** (Duration: {ep['num_years']} year(s))", expanded=(i <= 3)):
+                                col1, col2 = st.columns(2)
+                                with col1:
+                                    st.metric("Years", year_span)
+                                    st.metric("Duration", f"{ep['num_years']} year(s)")
+                                with col2:
+                                    st.metric("Max |Z-score|", f"{ep['max_abs_z']:.2f}")
+                                    st.metric("Mean Residual", f"{ep['mean_residual']:.3f}")
+
+                                st.info("ℹ️ **Interpretation:** Observation counts were significantly higher than model predictions. This may indicate increased sampling effort, population growth, or improved data collection.")
+
+                    st.markdown("---")
+
+                    # Important limitations
+                    st.subheader("⚠️ Important Limitations")
+                    st.warning("""
+                    **Please note the following when interpreting anomaly detection results:**
+
+                    1. **Sampling Artifacts:** Anomalies may reflect changes in data collection effort, taxonomy updates, or database ingestion patterns rather than true ecological changes.
+
+                    2. **Yearly Resolution:** The model operates at annual granularity and cannot detect within-year seasonal or sub-annual patterns.
+
+                    3. **Context Dependency:** Forecasts depend on having sufficient historical context. Early years in the time series have less reliable predictions.
+
+                    4. **Statistical vs. Biological Significance:** A statistically significant anomaly does not automatically indicate biological importance. Domain expertise is required for interpretation.
+
+                    5. **Spatial Aggregation:** This analysis ignores spatial distribution. Geographic shifts in occurrence could appear as temporal anomalies.
+                    """)
+
+                else:
+                    st.info("No anomaly episodes detected in the time series.")
+
+            else:
+                st.info("Anomaly detection was not performed. This may be because:")
+                st.markdown("""
+                - No GBIF temporal distribution data was available
+                - The time series was too short for analysis
+                - An error occurred during anomaly detection
+                """)
+
+        with tab5:
             st.header("Temporal Data Timeline")
 
             # Prepare timeline data
@@ -370,7 +502,7 @@ def main():
                             for idx, row in source_data.iterrows():
                                 st.json(row['details'])
 
-        with tab5:
+        with tab6:
             st.header("Full Assessment Report")
             st.markdown(result.get('report', 'No report generated.'))
 

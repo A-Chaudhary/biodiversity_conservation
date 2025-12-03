@@ -135,8 +135,9 @@ class AnalysisAgent(BaseAgent):
         super().__init__("Analysis Agent")
 
     async def execute(self, state: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze collected data using LLM."""
+        """Analyze collected data using LLM and perform anomaly detection."""
         from biodiversity_intel.llm import LLMClient, ANALYSIS_PROMPT
+        from biodiversity_intel.anomaly_detection import GBIFAnomalyDetector
         import json
 
         species_name = state.get("species_name", "Unknown")
@@ -147,6 +148,63 @@ class AnalysisAgent(BaseAgent):
             iucn_data = state.get("iucn_data", {})
             gbif_data = state.get("gbif_data", {})
             news_data = state.get("news_data", [])
+
+            # Perform anomaly detection on GBIF data if available
+            logger.info(f"AnalysisAgent: Checking GBIF data for anomaly detection - has_data={bool(gbif_data)}, has_temporal={bool(gbif_data.get('temporal_distribution') if gbif_data else False)}")
+
+            if gbif_data and gbif_data.get("temporal_distribution"):
+                logger.info(f"AnalysisAgent: Running anomaly detection on GBIF data - {len(gbif_data.get('temporal_distribution', {}))} years available")
+                try:
+                    # Create GBIF JSON structure expected by detector
+                    gbif_json = {
+                        "data": {
+                            "scientific_name": species_name,
+                            "occurrence_count": gbif_data.get("occurrence_count", 0),
+                            "temporal_distribution": gbif_data.get("temporal_distribution", {}),
+                            "spatial_distribution": gbif_data.get("spatial_distribution", [])
+                        }
+                    }
+
+                    # Initialize anomaly detector (auto-detects GPU)
+                    detector = GBIFAnomalyDetector(
+                        model_size="tiny",
+                        context_length=15,
+                        forecast_horizon=3,
+                        anomaly_threshold=2.0,
+                        device=None  # Auto-detect
+                    )
+
+                    # Run analysis (suppress plot in production)
+                    anomaly_results = detector.analyze(gbif_json, show_plot=False)
+
+                    # Store results in state
+                    if anomaly_results and anomaly_results.get('structured_results'):
+                        # Convert Plotly figure to JSON-serializable format
+                        figure_json = None
+                        if anomaly_results['figure'] is not None:
+                            figure_json = anomaly_results['figure'].to_json()
+
+                        state["anomaly_detection"] = {
+                            "summary_stats": anomaly_results['structured_results'].summary_stats.model_dump(),
+                            "num_anomalies": anomaly_results['structured_results'].num_anomalies,
+                            "num_declines": anomaly_results['structured_results'].num_declines,
+                            "num_surges": anomaly_results['structured_results'].num_surges,
+                            "episodes": [ep.model_dump() for ep in anomaly_results['structured_results'].episodes],
+                            "time_series": anomaly_results['time_series'].to_dict('records') if anomaly_results['time_series'] is not None else [],
+                            "anomaly_results": anomaly_results['anomaly_results'].to_dict('records') if anomaly_results['anomaly_results'] is not None else [],
+                            "figure_json": figure_json  # Store Plotly figure as JSON string
+                        }
+                        logger.info(f"AnalysisAgent: Anomaly detection complete - Found {state['anomaly_detection']['num_anomalies']} anomalies")
+                    else:
+                        state["anomaly_detection"] = None
+                        logger.warning(f"AnalysisAgent: Anomaly detection returned no results")
+
+                except Exception as e:
+                    logger.error(f"AnalysisAgent: Error during anomaly detection: {e}", exc_info=True)
+                    state["anomaly_detection"] = None
+            else:
+                logger.info(f"AnalysisAgent: Skipping anomaly detection - no temporal distribution data")
+                state["anomaly_detection"] = None
 
             # Format data for LLM analysis
             logger.debug(f"AnalysisAgent: Formatting data for LLM analysis")
