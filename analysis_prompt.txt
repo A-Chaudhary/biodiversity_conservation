@@ -1,297 +1,3102 @@
 
-You are a conservation biologist analyzing biodiversity data for Panthera tigris.
+You are a conservation biologist analyzing biodiversity data for Gorilla beringei.
 
 IUCN Red List Data:
 {
-  "scientific_name": "Panthera tigris",
-  "conservation_status": "EN",
+  "scientific_name": "Gorilla beringei",
+  "conservation_status": "CR",
   "population_trend": "Decreasing",
   "threats": [
-    "5_1_3",
-    "2_2_2",
-    "5_1_2",
-    "2_1_3",
-    "3_2",
-    "6_2",
     "2_1_1",
-    "5_1_1",
-    "2_3_2",
-    "2_1_2",
-    "2_2_1",
-    "9_2_1",
-    "11_4",
-    "3_1",
-    "4_1",
-    "7_1_1",
-    "7_2_1",
+    "8_5_1",
+    "2_3_4",
+    "3_2",
     "5_3_3",
-    "5_3_4"
+    "11_1",
+    "4_1",
+    "5_1_2",
+    "5_3_4",
+    "6_1",
+    "2_1_3",
+    "5_1_1",
+    "3_1",
+    "6_2",
+    "5_1_3",
+    "2_1_2",
+    "8_2",
+    "1_3",
+    "1_1",
+    "7_1_3"
   ],
-  "assessment_date": "2021-12-15T00:00:00.000Z",
+  "threat_details": [
+    {
+      "code": "2_1_1",
+      "name": "2_1_1"
+    },
+    {
+      "code": "8_5_1",
+      "name": "8_5_1"
+    },
+    {
+      "code": "2_3_4",
+      "name": "2_3_4"
+    },
+    {
+      "code": "3_2",
+      "name": "3_2"
+    },
+    {
+      "code": "5_3_3",
+      "name": "5_3_3"
+    },
+    {
+      "code": "11_1",
+      "name": "11_1"
+    },
+    {
+      "code": "4_1",
+      "name": "4_1"
+    },
+    {
+      "code": "5_1_2",
+      "name": "5_1_2"
+    },
+    {
+      "code": "5_3_4",
+      "name": "5_3_4"
+    },
+    {
+      "code": "6_1",
+      "name": "6_1"
+    },
+    {
+      "code": "2_1_3",
+      "name": "2_1_3"
+    },
+    {
+      "code": "5_1_1",
+      "name": "5_1_1"
+    },
+    {
+      "code": "3_1",
+      "name": "3_1"
+    },
+    {
+      "code": "6_2",
+      "name": "6_2"
+    },
+    {
+      "code": "5_1_3",
+      "name": "5_1_3"
+    },
+    {
+      "code": "2_1_2",
+      "name": "2_1_2"
+    },
+    {
+      "code": "8_2",
+      "name": "8_2"
+    },
+    {
+      "code": "1_3",
+      "name": "1_3"
+    },
+    {
+      "code": "1_1",
+      "name": "1_1"
+    },
+    {
+      "code": "7_1_3",
+      "name": "7_1_3"
+    }
+  ],
+  "assessment_date": "2018-08-02T00:00:00.000Z",
   "assessment_history": [
     {
-      "year_published": "2022",
-      "status": "EN",
-      "assessment_id": 214862019,
-      "url": "https://www.iucnredlist.org/species/15955/214862019"
+      "year_published": "2019",
+      "status": "CR",
+      "assessment_id": 115576640,
+      "url": "https://www.iucnredlist.org/species/39994/115576640"
     },
     {
-      "year_published": "2015",
-      "status": "EN",
-      "assessment_id": 50659951,
-      "url": "https://www.iucnredlist.org/species/15955/50659951"
+      "year_published": "2016",
+      "status": "CR",
+      "assessment_id": 102325702,
+      "url": "https://www.iucnredlist.org/species/39994/102325702"
     },
     {
-      "year_published": "2011",
-      "status": "EN",
-      "assessment_id": 5332619,
-      "url": "https://www.iucnredlist.org/species/15955/5332619"
-    },
-    {
-      "year_published": "2010",
-      "status": "EN",
-      "assessment_id": 5331917,
-      "url": "https://www.iucnredlist.org/species/15955/5331917"
+      "year_published": "2016",
+      "status": "CR",
+      "assessment_id": 17964126,
+      "url": "https://www.iucnredlist.org/species/39994/17964126"
     },
     {
       "year_published": "2008",
       "status": "EN",
-      "assessment_id": 5331153,
-      "url": "https://www.iucnredlist.org/species/15955/5331153"
+      "assessment_id": 10289921,
+      "url": "https://www.iucnredlist.org/species/39994/10289921"
     },
     {
-      "year_published": "2002",
+      "year_published": "2000",
       "status": "EN",
-      "assessment_id": 5330217,
-      "url": "https://www.iucnredlist.org/species/15955/5330217"
-    },
-    {
-      "year_published": "1996",
-      "status": "EN",
-      "assessment_id": 5330451,
-      "url": "https://www.iucnredlist.org/species/15955/5330451"
-    },
-    {
-      "year_published": "1994",
-      "status": "E",
-      "assessment_id": 5331866,
-      "url": "https://www.iucnredlist.org/species/15955/5331866"
-    },
-    {
-      "year_published": "1990",
-      "status": "E",
-      "assessment_id": 5331849,
-      "url": "https://www.iucnredlist.org/species/15955/5331849"
-    },
-    {
-      "year_published": "1988",
-      "status": "E",
-      "assessment_id": 5331900,
-      "url": "https://www.iucnredlist.org/species/15955/5331900"
-    },
-    {
-      "year_published": "1986",
-      "status": "E",
-      "assessment_id": 5331883,
-      "url": "https://www.iucnredlist.org/species/15955/5331883"
+      "assessment_id": 10290114,
+      "url": "https://www.iucnredlist.org/species/39994/10290114"
     }
   ]
 }
 
 Assessment History:
-  - 2022: EN
-  - 2015: EN
-  - 2011: EN
-  - 2010: EN
+  - 2019: CR
+  - 2016: CR
+  - 2016: CR
   - 2008: EN
-  - 2002: EN
-  - 1996: EN
-  - 1994: E
-  - 1990: E
-  - 1988: E
+  - 2000: EN
 
 GBIF Occurrence Data:
 {
-  "scientific_name": "Panthera tigris (Linnaeus, 1758)",
-  "occurrence_count": 7497,
+  "scientific_name": "Gorilla beringei Matschie, 1903",
+  "occurrence_count": 1180,
   "temporal_distribution": {
-    "2025": 217,
-    "2024": 299,
-    "2023": 179,
-    "2022": 132,
-    "2021": 1832,
-    "2020": 296,
-    "2019": 296,
-    "2018": 233,
-    "2017": 149,
-    "2016": 115,
-    "2015": 127,
-    "2014": 109,
-    "2013": 188,
-    "2012": 72,
-    "2011": 193,
-    "2010": 51,
-    "2009": 87,
-    "2008": 26,
-    "2007": 46,
-    "2006": 69,
-    "2005": 46,
-    "2004": 22,
-    "2003": 14,
-    "2002": 7,
-    "2001": 15,
-    "2000": 1,
-    "1999": 6,
-    "1998": 9,
-    "1997": 10,
-    "1996": 11,
-    "1995": 14,
-    "1994": 13,
-    "1993": 7,
-    "1992": 7,
-    "1991": 4,
-    "1990": 5,
-    "1989": 5,
-    "1988": 3,
-    "1987": 13,
-    "1986": 15,
-    "1985": 12,
-    "1984": 12,
-    "1983": 8,
-    "1982": 12,
-    "1981": 6,
-    "1980": 14,
-    "1979": 5,
-    "1978": 5,
-    "1977": 23,
-    "1976": 7,
-    "1975": 5,
-    "1974": 11,
-    "1973": 10,
-    "1972": 5,
-    "1971": 2,
-    "1970": 10,
-    "1969": 18,
-    "1968": 11,
-    "1967": 38,
-    "1966": 12,
-    "1965": 19,
-    "1964": 11,
-    "1963": 13,
-    "1962": 29,
-    "1961": 15,
-    "1960": 21,
-    "1959": 28,
-    "1958": 3,
-    "1957": 13,
-    "1956": 6,
-    "1955": 8,
-    "1954": 2,
-    "1953": 2,
-    "1952": 3,
-    "1951": 1,
-    "1950": 2,
-    "1949": 5,
-    "1945": 11,
-    "1944": 7,
-    "1943": 5,
-    "1941": 4,
-    "1940": 6,
-    "1939": 2,
-    "1938": 3,
-    "1937": 4,
-    "1936": 4,
-    "1935": 3,
-    "1934": 2,
-    "1933": 6,
-    "1932": 6,
-    "1931": 3,
-    "1930": 7,
-    "1929": 8,
+    "2014": 20,
+    "2013": 27,
+    "2012": 54,
+    "2011": 18,
+    "2010": 3,
+    "2009": 20,
+    "2008": 21,
+    "2007": 4,
+    "2006": 5,
+    "2005": 1,
+    "2004": 1,
+    "2003": 5,
+    "2002": 1,
+    "2001": 3,
+    "2000": 3,
+    "1998": 1,
+    "1996": 1,
+    "1992": 1,
+    "1991": 27,
+    "1990": 2,
+    "1989": 1,
+    "1988": 1,
+    "1986": 3,
+    "1985": 1,
+    "1980": 2,
+    "1973": 1,
+    "1969": 3,
+    "1968": 1,
+    "1959": 2,
+    "1957": 4,
+    "1954": 4,
+    "1949": 2,
+    "1945": 2,
+    "1942": 2,
+    "1938": 1,
+    "1937": 12,
+    "1936": 1,
+    "1932": 1,
+    "1931": 1,
     "1927": 4,
-    "1926": 4,
-    "1925": 1,
+    "1925": 4,
     "1924": 2,
-    "1923": 7,
-    "1921": 2,
-    "1920": 4,
-    "1919": 3,
-    "1918": 1,
-    "1917": 2,
-    "1916": 1,
-    "1915": 6,
-    "1914": 5,
-    "1913": 1,
-    "1912": 4,
-    "1911": 1,
-    "1909": 2,
-    "1908": 6,
-    "1906": 2,
-    "1905": 3,
-    "1904": 6,
-    "1903": 2,
-    "1902": 4,
-    "1900": 6,
-    "1899": 1,
-    "1898": 2,
-    "1896": 9,
-    "1895": 2,
-    "1894": 3,
-    "1893": 5,
-    "1892": 9,
-    "1891": 4,
-    "1890": 3,
-    "1889": 5,
-    "1888": 2,
-    "1887": 6,
-    "1886": 4,
-    "1885": 5,
-    "1884": 2,
-    "1882": 1,
-    "1878": 3,
-    "1877": 4,
-    "1876": 2,
-    "1875": 1,
-    "1874": 1,
-    "1872": 3,
-    "1870": 4,
-    "1869": 1,
-    "1863": 1,
-    "1860": 1,
-    "1858": 2,
-    "1857": 2,
-    "1854": 1,
-    "1849": 1,
-    "1842": 2,
-    "1841": 1,
-    "1840": 1,
-    "1839": 3,
-    "1833": 1,
-    "1831": 1,
-    "1829": 1,
-    "1826": 1,
-    "1825": 1,
-    "1821": 1
+    "1921": 4,
+    "1909": 1,
+    "1908": 1,
+    "1907": 4,
+    "1902": 2,
+    "2025": 80,
+    "2024": 120,
+    "2023": 99,
+    "2022": 34,
+    "2021": 23,
+    "2020": 26,
+    "2019": 55,
+    "2018": 45,
+    "2017": 37,
+    "2016": 37,
+    "2015": 27
   },
   "spatial_distribution": []
 }
 
 Conservation News Articles:
-- Ousted Nepal gov’t cleared easier path for controversial cable cars, documents show
-  URL: https://news.mongabay.com/2025/10/ousted-nepal-govt-cleared-easier-path-for-controversial-cable-cars-documents-show/
-  Summary: Nepal’s ousted KP Sharma Oli administration secretly granted national priority status to six commercial cable car projects, allowing easier forest clearance and land acquisition in protected areas. • Lawyers and conservationists call the move illegal and contemptuous of court, as it bypassed pending Supreme Court cases and lacked proper environmental and community review, despite prior rulings invalidating infrastructure inside protected zones. • The Annapurna Sikles cable car and other projects threaten biodiversity hotspots and Indigenous lands; critics highlight flawed environmental impact assessments, risks to ecosystems and lack of consultation with local and Indigenous communities. • The interim government claims to be unaware of the decision, while experts urge its reversal, warning that the new rule shields developers from accountability and endangers Nepal’s conservation gains across.
-- Study reveals overlooked cultural threat to wildcats across Africa
-  URL: https://news.mongabay.com/2025/10/study-reveals-overlooked-cultural-threat-to-wildcats-across-africa/
-  Summary: The role that cultural demand plays in driving hunting and trade of many species of wildcats is poorly understood. • Research commissioned by the wildcat conservation NGO Panthera found widespread use across Africa by traditional leaders, healers and participants in cultural ceremonies. Leopards were the most commonly identified species, followed by lions, servals and cheetahs. • The researchers say recognizing the cultural contexts in which carnivores are used can help conservationists design interventions that are culturally sensitive and locally relevant.
-- Indochinese leopards face ‘bleak’ future, but hope persists
-  URL: https://news.mongabay.com/2025/10/indochinese-leopards-face-bleak-future-but-hope-persists/
-  Summary: The Indochinese leopard, a subspecies native to mainland Southeast Asia, has been driven to the edge of extinction by snaring and the wildlife trade. • Population estimates for the species range from 77 to 766 individuals, highlighting both the cat’s rarity and the difficulty of studying it. • Conservationists are working to safeguard the leopard’s last remaining strongholds in Thailand, Myanmar and Malaysia.
-- Controlling wildlife crime saves more than species (commentary)
-  URL: https://news.mongabay.com/2025/09/controlling-wildlife-crime-saves-more-than-species-commentary/
-  Summary: The illegal wildlife trade threatens many species worldwide but also jeopardizes local communities’ well-being and livelihoods, breaks down law and order in society, compromises people’s safety and security, and promotes corruption, a new op-ed argues. • Organized criminal networks typically depend on vulnerable, cash-poor people in local communities to capture and transport wildlife across borders, but even when they’re not caught, the damage to their families and communities can be great. • That’s because this trade can be utilized for any form of illegal activity, not just wildlife crime, according to the writer: “People involved in the illegal wildlife chain are often found involved in other crimes as well, such as drugs, arms and gold smuggling, and money laundering. All these activities promote various forms of corruption, harming societal development and entrenching the cycle of poverty.” • This post is a commentary. The views expressed are those of the author, not necessarily o
-- Rare Javan leopard sighting renews focus on conservation, monitoring efforts
-  URL: https://news.mongabay.com/2025/08/javan-leopard-camera-trap-java-endangered-wildlife-big-cat-conservation/
-  Summary: A rare Javan leopard was recorded on camera in Mount Lawu forest, Central Java, after officials installed camera traps following a hiker’s report. • The endangered big cat’s presence highlights Mount Lawu’s ecological importance, where Tahura Mangkunagoro park conserves diverse plants, birds and mammals. • With only around 350 Javan leopards left in the wild, the sighting underscores urgent threats to the species from habitat loss, hunting and human pressure. • Authorities and conservation groups are expanding camera-trap surveys and preparing a 2026–2031 action plan to safeguard the species through better monitoring, habitat protection and community engagement.
+- Uncovering forest loss in gorilla park six months after M23 offensive in the DRC
+  URL: https://news.mongabay.com/2025/07/uncovering-forest-loss-in-gorilla-park-six-months-after-m23-offensive-in-the-drc/
+  Summary: Six months since  M23 armed rebels took control of provincial capitals in the eastern Democratic Republic of Congo, local activists and satellite imagery collected by Mongabay have identified sites of expanding forest loss in Kahuzi-Biega National Park. • Researchers say this is due to collapsing conservation efforts, lack of park monitoring, and massive logging and charcoal production inside the national park. While M23 and other militias don’t produce the charcoal directly, they profit by taxing its transport and trade. • Activists who have denounced the illegal exploitation have been harassed, attacked, or even killed. Some, like Josue Aruna, have been forced into hiding or exile after facing death threats. • On July 19, the DRC government and M23 signed a ceasefire agreement, with conservationists saying they hope this will create conditions for restoring security in the area and halt the destruction of the rainforest.
+- Friendship benefits male and female mountain gorillas differently, study shows
+  URL: https://news.mongabay.com/2025/06/friendship-benefits-male-and-female-mountain-gorillas-differently-study-shows/
+  Summary: A 21-year study of 164 wild mountain gorillas found that strong social bonds produce different health effects for males and females, with males experiencing more illness but fewer injuries when they have close friendships. • Female gorillas with strong social bonds generally had better health outcomes, experiencing 19% fewer injuries and 14% less illness compared to those with weaker social bonds. • The benefits and costs of friendship varied based on group size, with females in small groups having fewer offspring despite better health, while those in large groups had more babies but higher rates of illness. • The research helps explain why animals exhibit such diverse social behaviors and may inform conservation efforts for this endangered species, which numbers just over 1,000 individuals.
+- Signs of hope for rescued gorillas rewilded in DRC, but security concerns linger
+  URL: https://news.mongabay.com/2025/06/signs-of-hope-for-rescued-gorillas-rewilded-in-drc-but-security-concerns-linger/
+  Summary: In October 2024, conservationists released four gorillas from the Gorilla Rehabilitation and Conservation Education Center (GRACE) in the eastern Democratic Republic of Congo back into the wild. • The release took place in Virunga National Park — raising some concerns about their safety, as the park has been largely controlled by the armed rebel group M23 since January 2025. • To reduce poaching in the area, GRACE says it focuses on working closely with local communities and integrating them into the organization. • As for the released gorillas, GRACE reports that they joined a wild gorilla family and were even observed mating with the dominant male, raising hopes of a successful rewilding.
+- Armed conflict, not Batwa people, at heart of Grauer’s gorillas’ past decline in DRC park
+  URL: https://news.mongabay.com/2024/12/armed-conflict-not-batwa-people-biggest-factor-in-decline-of-grauers-gorillas-in-drc-park/
+  Summary: The decline in critically endangered Grauer’s gorillas between 1994 and 2003 in the highland sector of Kahuzi-Biega National Park in the Democratic Republic of Congo was due to the impacts of armed conflict, rather than the presence or absence of Indigenous communities, according to a new study. • The finding, including recent analysis of forest loss in parts of the park where Indigenous Batwa people returned, challenges simple but competing narratives that the region’s Batwa people are either forest destroyers or forest guardians, say various primatologists. • After the onset of the Rwandan genocide and Congo Wars, which drove an influx of refugees, poaching, hunting and mining in the region, estimates of Grauer’s gorillas dropped from about 258 to 130 individuals, only to rise again once the Second Congo War ended. • Researchers and conservation authorities say conservation in Kahuzi-Biega National Park remains challenging, but that Indigenous people should be included in environmental stewardship.
+- ‘Historic’ decision for the Batwa & DRC gorilla park faces hurdles — and hope
+  URL: https://news.mongabay.com/2024/11/historic-drc-decision-on-batwa-park-evictions-faces-implementation-hurdles/
+  Summary: The African Commission on Human and Peoples’ Rights determined that the eviction of thousands of Batwa from Kahuzi-Biega National Park in the 1970s was a human rights violation. However, months later, questions remain about whether and how the government will implement the commission’s 19 recommendations to address the situation. • The return of Batwa to their ancestral lands in the park, paying them compensation and a public apology for all the Batwa suffered are among the key recommendations the Batwa and sources highlighted. Implementation would be challenging, but necessary from a human rights standpoint, they said, while breaking down the process. • Researchers say there lacks evidence that modern-day Batwa are custodians of the forest and environmentalists highlight the need to build community-centered conservation projects that help Batwa live sustainably on their land in the park or find a balance that works for both the Batwa and park officials. • The DRC and park officials have not yet commented on the possibility of implementation, but conservation authorities and the park’s partners and donors say they are taking steps to reconcile Indigenous rights and the protection of biodiversity.
+- Gorilla permit fraud dents community-led conservation efforts in Uganda
+  URL: https://news.mongabay.com/2023/10/gorilla-permit-fraud-dents-community-led-conservation-efforts-in-uganda/
+  Summary: Foreign tourists pay $600-$700 per person for gorilla-tracking permits issued by the Uganda Wildlife Authority, which allow them to track and spend an hour with human-habituated mountain gorilla families. • A recent audit at the UWA showed that some corrupt officials were issuing fake permits, diverting revenue away from the agency and impacting its conservation work, including project funding for communities at the frontline of gorilla conservation. • In response, the agency suspended 14 staff members suspected of fraud, initiated a thorough probe, and rolled out a new system for issuing permits and collecting revenue. • Communities living near the gorilla parks, many of whom have faced restrictions on traditional rights to the forests as a result of their protected status, say they’re aware of the scandal and that it’s only the latest in their litany of grievances against the UWA.
+- Camera trap images of rare gorillas with infants bring hope in DRC
+  URL: https://news.mongabay.com/2023/04/camera-trap-photos-of-rare-gorillas-with-infants-bring-hope-in-the-drc/
+  Summary: Camera traps in the Tayna Nature Reserve in the Democratic Republic of Congo have recorded two mother-infant pairs of eastern lowland gorillas, confirming the presence of healthy family groups in one of their last strongholds. • This subspecies is critically endangered, with only 6,800 individuals left in the world, and is threatened by hunting, deforestation and mining activities • Gorilla Rehabilitation and Conservation Education (GRACE) operates the world’s only sanctuary for rescued eastern lowland gorillas, and employs local communities in a key role in monitoring efforts in Tayna.
+- Mountain gorilla reproduction slows with female transfers, study shows
+  URL: https://news.mongabay.com/2022/11/mountain-gorilla-reproduction-slows-with-female-transfers-study-shows/
+  Summary: Successful conservation interventions have helped mountain gorilla populations recover from 620 in 1989 to more than 1,000 today. • However, mountain gorilla habitat is not expanding, and a growing body of research indicates that increasing density comes with a price: More groups sharing territory leads to more frequent intergroup violence. • A new study finds that when intergroup contact increases, so do transfers of females between groups, leading to delayed reproduction. • The study also emphasizes that multiple factors, such as delayed reproduction and increased mortality, cascade to create a slowdown in population growth.
+- Road projects threaten integrity of Uganda’s mountain gorilla stronghold
+  URL: https://news.mongabay.com/2022/04/road-projects-threaten-integrity-of-ugandas-mountain-gorilla-stronghold/
+  Summary: Ugandan authorities are considering two road projects through Bwindi Impenetrable National Park, home to half of the world’s population of endangered mountain gorillas. • The proposed new road will impact connectivity between Bwindi and Sarambwe Nature Reserve in the neighboring Democratic Republic of Congo, says the International Gorilla Conservation Programme. • Most conservationists don’t dispute the need for improved road infrastructure for nearby communities, but say they’re concerned the government is overlooking less harmful alternatives.
+- Rangers in DRC gorilla park abused Indigenous villagers, report says
+  URL: https://news.mongabay.com/2022/04/rangers-in-drc-gorilla-park-abused-indigenous-villagers-report-says/
+  Summary: According to a new investigative report by Minority Rights Group (MRG), 20 Indigenous Batwa were killed, 15 women were raped and 2 children were burnt alive by park guards and soldiers in the DRC’s Kahuzi-Biega National Park (KBNP), home to the critically endangered eastern lowland gorilla. • The acts were committed between 2019 and 2021 under the knowledge and paramilitary support of U.S and German government agencies and the Wildlife Conservation Society (WCS), say the report’s researchers who obtained evidence through interviews with eyewitnesses and park guards involved in the attacks. • WCS denies allegations brought against the organization, saying it had no involvement in military operations. The KBNP bulletin denied similar reports of violence during a visit by the government agency that manages the park in February. • German government agencies and a cabinet secretary are calling for an independent investigation into allegations of abuses, which MRG says is just the “tip of the iceberg”. According to sources, another investigation is underway.
+
+Anomaly Detection Results (Time-Series Analysis):
+{
+  "summary_stats": {
+    "scientific_name": "Gorilla beringei",
+    "num_years": 124,
+    "year_range": "1902-2025",
+    "total_occurrences": 868,
+    "mean_count": 7.0,
+    "median_count": 0.0,
+    "min_count": 0,
+    "max_count": 120,
+    "trend_slope": 0.263527930763179,
+    "trend_direction": "increasing"
+  },
+  "num_anomalies": 53,
+  "num_declines": 8,
+  "num_surges": 45,
+  "episodes": [
+    {
+      "start_year": 1921,
+      "end_year": 1921,
+      "type": "surge",
+      "max_abs_z": 939.5632264025234,
+      "num_years": 1,
+      "mean_residual": 1.6094379124341003
+    },
+    {
+      "start_year": 1924,
+      "end_year": 1925,
+      "type": "surge",
+      "max_abs_z": 939.5632264025234,
+      "num_years": 2,
+      "mean_residual": 1.354025100551105
+    },
+    {
+      "start_year": 1927,
+      "end_year": 1927,
+      "type": "surge",
+      "max_abs_z": 939.5632264025234,
+      "num_years": 1,
+      "mean_residual": 1.6094379124341003
+    },
+    {
+      "start_year": 1931,
+      "end_year": 1932,
+      "type": "surge",
+      "max_abs_z": 404.6478564393709,
+      "num_years": 2,
+      "mean_residual": 0.6931471805599453
+    },
+    {
+      "start_year": 1936,
+      "end_year": 1938,
+      "type": "surge",
+      "max_abs_z": 1497.374999828903,
+      "num_years": 3,
+      "mean_residual": 1.3170812395271425
+    },
+    {
+      "start_year": 1939,
+      "end_year": 1939,
+      "type": "decline",
+      "max_abs_z": 202.48233850121437,
+      "num_years": 1,
+      "mean_residual": -0.34684494137763977
+    },
+    {
+      "start_year": 1942,
+      "end_year": 1942,
+      "type": "surge",
+      "max_abs_z": 641.3516784536008,
+      "num_years": 1,
+      "mean_residual": 1.0986122886681098
+    },
+    {
+      "start_year": 1945,
+      "end_year": 1945,
+      "type": "surge",
+      "max_abs_z": 641.3516784536008,
+      "num_years": 1,
+      "mean_residual": 1.0986122886681098
+    },
+    {
+      "start_year": 1949,
+      "end_year": 1949,
+      "type": "surge",
+      "max_abs_z": 641.3516784536008,
+      "num_years": 1,
+      "mean_residual": 1.0986122886681098
+    },
+    {
+      "start_year": 1954,
+      "end_year": 1954,
+      "type": "surge",
+      "max_abs_z": 939.5632264025234,
+      "num_years": 1,
+      "mean_residual": 1.6094379124341003
+    },
+    {
+      "start_year": 1957,
+      "end_year": 1957,
+      "type": "surge",
+      "max_abs_z": 939.5632264025234,
+      "num_years": 1,
+      "mean_residual": 1.6094379124341003
+    },
+    {
+      "start_year": 1959,
+      "end_year": 1959,
+      "type": "surge",
+      "max_abs_z": 641.3516784536008,
+      "num_years": 1,
+      "mean_residual": 1.0986122886681098
+    },
+    {
+      "start_year": 1968,
+      "end_year": 1969,
+      "type": "surge",
+      "max_abs_z": 809.2957128787418,
+      "num_years": 2,
+      "mean_residual": 1.0397207708399179
+    },
+    {
+      "start_year": 1973,
+      "end_year": 1973,
+      "type": "surge",
+      "max_abs_z": 404.6478564393709,
+      "num_years": 1,
+      "mean_residual": 0.6931471805599453
+    },
+    {
+      "start_year": 1980,
+      "end_year": 1980,
+      "type": "surge",
+      "max_abs_z": 641.3516784536008,
+      "num_years": 1,
+      "mean_residual": 1.0986122886681098
+    },
+    {
+      "start_year": 1985,
+      "end_year": 1986,
+      "type": "surge",
+      "max_abs_z": 809.2957128787418,
+      "num_years": 2,
+      "mean_residual": 1.0397207708399179
+    },
+    {
+      "start_year": 1988,
+      "end_year": 1991,
+      "type": "surge",
+      "max_abs_z": 1541.3338961165502,
+      "num_years": 4,
+      "mean_residual": 1.281289002697367
+    },
+    {
+      "start_year": 1993,
+      "end_year": 1993,
+      "type": "decline",
+      "max_abs_z": 403.5962466284078,
+      "num_years": 1,
+      "mean_residual": -0.6913458108901978
+    },
+    {
+      "start_year": 1996,
+      "end_year": 1996,
+      "type": "surge",
+      "max_abs_z": 404.6478564393709,
+      "num_years": 1,
+      "mean_residual": 0.6931471805599453
+    },
+    {
+      "start_year": 1998,
+      "end_year": 1998,
+      "type": "surge",
+      "max_abs_z": 404.6478564393709,
+      "num_years": 1,
+      "mean_residual": 0.6931471805599453
+    },
+    {
+      "start_year": 2000,
+      "end_year": 2001,
+      "type": "surge",
+      "max_abs_z": 809.2957128787418,
+      "num_years": 2,
+      "mean_residual": 1.3862943611198906
+    },
+    {
+      "start_year": 2002,
+      "end_year": 2002,
+      "type": "decline",
+      "max_abs_z": 321.3979369848183,
+      "num_years": 1,
+      "mean_residual": -0.5505430717441319
+    },
+    {
+      "start_year": 2003,
+      "end_year": 2003,
+      "type": "surge",
+      "max_abs_z": 640.7506424839519,
+      "num_years": 1,
+      "mean_residual": 1.09758273573425
+    },
+    {
+      "start_year": 2006,
+      "end_year": 2009,
+      "type": "surge",
+      "max_abs_z": 1042.8974973588504,
+      "num_years": 4,
+      "mean_residual": 1.2591657875549083
+    },
+    {
+      "start_year": 2010,
+      "end_year": 2010,
+      "type": "decline",
+      "max_abs_z": 804.675477158986,
+      "num_years": 1,
+      "mean_residual": -1.3783800640052315
+    },
+    {
+      "start_year": 2011,
+      "end_year": 2012,
+      "type": "surge",
+      "max_abs_z": 1110.5278842122514,
+      "num_years": 2,
+      "mean_residual": 1.773334717300774
+    },
+    {
+      "start_year": 2013,
+      "end_year": 2014,
+      "type": "decline",
+      "max_abs_z": 10.654787608219399,
+      "num_years": 2,
+      "mean_residual": -0.012717205944180243
+    },
+    {
+      "start_year": 2015,
+      "end_year": 2019,
+      "type": "surge",
+      "max_abs_z": 296.301545677281,
+      "num_years": 5,
+      "mean_residual": 0.28618281782784144
+    },
+    {
+      "start_year": 2020,
+      "end_year": 2021,
+      "type": "decline",
+      "max_abs_z": 317.6334387278282,
+      "num_years": 2,
+      "mean_residual": -0.42015485247693873
+    },
+    {
+      "start_year": 2022,
+      "end_year": 2025,
+      "type": "surge",
+      "max_abs_z": 828.7252855504654,
+      "num_years": 4,
+      "mean_residual": 0.9824666657010147
+    }
+  ],
+  "time_series": [
+    {
+      "year": 1902,
+      "count": 2,
+      "log_count": 1.0986122886681098
+    },
+    {
+      "year": 1903,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1904,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1905,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1906,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1907,
+      "count": 4,
+      "log_count": 1.6094379124341003
+    },
+    {
+      "year": 1908,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1909,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1910,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1911,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1912,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1913,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1914,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1915,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1916,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1917,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1918,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1919,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1920,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1921,
+      "count": 4,
+      "log_count": 1.6094379124341003
+    },
+    {
+      "year": 1922,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1923,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1924,
+      "count": 2,
+      "log_count": 1.0986122886681098
+    },
+    {
+      "year": 1925,
+      "count": 4,
+      "log_count": 1.6094379124341003
+    },
+    {
+      "year": 1926,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1927,
+      "count": 4,
+      "log_count": 1.6094379124341003
+    },
+    {
+      "year": 1928,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1929,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1930,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1931,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1932,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1933,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1934,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1935,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1936,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1937,
+      "count": 12,
+      "log_count": 2.5649493574615367
+    },
+    {
+      "year": 1938,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1939,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1940,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1941,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1942,
+      "count": 2,
+      "log_count": 1.0986122886681098
+    },
+    {
+      "year": 1943,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1944,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1945,
+      "count": 2,
+      "log_count": 1.0986122886681098
+    },
+    {
+      "year": 1946,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1947,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1948,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1949,
+      "count": 2,
+      "log_count": 1.0986122886681098
+    },
+    {
+      "year": 1950,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1951,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1952,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1953,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1954,
+      "count": 4,
+      "log_count": 1.6094379124341003
+    },
+    {
+      "year": 1955,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1956,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1957,
+      "count": 4,
+      "log_count": 1.6094379124341003
+    },
+    {
+      "year": 1958,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1959,
+      "count": 2,
+      "log_count": 1.0986122886681098
+    },
+    {
+      "year": 1960,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1961,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1962,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1963,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1964,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1965,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1966,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1967,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1968,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1969,
+      "count": 3,
+      "log_count": 1.3862943611198906
+    },
+    {
+      "year": 1970,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1971,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1972,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1973,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1974,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1975,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1976,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1977,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1978,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1979,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1980,
+      "count": 2,
+      "log_count": 1.0986122886681098
+    },
+    {
+      "year": 1981,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1982,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1983,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1984,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1985,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1986,
+      "count": 3,
+      "log_count": 1.3862943611198906
+    },
+    {
+      "year": 1987,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1988,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1989,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1990,
+      "count": 2,
+      "log_count": 1.0986122886681098
+    },
+    {
+      "year": 1991,
+      "count": 27,
+      "log_count": 3.332204510175204
+    },
+    {
+      "year": 1992,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1993,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1994,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1995,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1996,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1997,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 1998,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 1999,
+      "count": 0,
+      "log_count": 0.0
+    },
+    {
+      "year": 2000,
+      "count": 3,
+      "log_count": 1.3862943611198906
+    },
+    {
+      "year": 2001,
+      "count": 3,
+      "log_count": 1.3862943611198906
+    },
+    {
+      "year": 2002,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 2003,
+      "count": 5,
+      "log_count": 1.791759469228055
+    },
+    {
+      "year": 2004,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 2005,
+      "count": 1,
+      "log_count": 0.6931471805599453
+    },
+    {
+      "year": 2006,
+      "count": 5,
+      "log_count": 1.791759469228055
+    },
+    {
+      "year": 2007,
+      "count": 4,
+      "log_count": 1.6094379124341003
+    },
+    {
+      "year": 2008,
+      "count": 21,
+      "log_count": 3.091042453358316
+    },
+    {
+      "year": 2009,
+      "count": 20,
+      "log_count": 3.044522437723423
+    },
+    {
+      "year": 2010,
+      "count": 3,
+      "log_count": 1.3862943611198906
+    },
+    {
+      "year": 2011,
+      "count": 18,
+      "log_count": 2.9444389791664403
+    },
+    {
+      "year": 2012,
+      "count": 54,
+      "log_count": 4.007333185232471
+    },
+    {
+      "year": 2013,
+      "count": 27,
+      "log_count": 3.332204510175204
+    },
+    {
+      "year": 2014,
+      "count": 20,
+      "log_count": 3.044522437723423
+    },
+    {
+      "year": 2015,
+      "count": 27,
+      "log_count": 3.332204510175204
+    },
+    {
+      "year": 2016,
+      "count": 37,
+      "log_count": 3.6375861597263857
+    },
+    {
+      "year": 2017,
+      "count": 37,
+      "log_count": 3.6375861597263857
+    },
+    {
+      "year": 2018,
+      "count": 45,
+      "log_count": 3.828641396489095
+    },
+    {
+      "year": 2019,
+      "count": 55,
+      "log_count": 4.02535169073515
+    },
+    {
+      "year": 2020,
+      "count": 26,
+      "log_count": 3.295836866004329
+    },
+    {
+      "year": 2021,
+      "count": 23,
+      "log_count": 3.1780538303479458
+    },
+    {
+      "year": 2022,
+      "count": 34,
+      "log_count": 3.5553480614894135
+    },
+    {
+      "year": 2023,
+      "count": 99,
+      "log_count": 4.605170185988092
+    },
+    {
+      "year": 2024,
+      "count": 120,
+      "log_count": 4.795790545596741
+    },
+    {
+      "year": 2025,
+      "count": 80,
+      "log_count": 4.394449154672439
+    }
+  ],
+  "anomaly_results": [
+    {
+      "year": 1917,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.0,
+      "horizon": 1,
+      "context_start_year": 1902,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1918,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.023018237203359604,
+      "horizon": 1,
+      "context_start_year": 1903,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1919,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.023018233478069305,
+      "horizon": 1,
+      "context_start_year": 1904,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1920,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.01733565330505371,
+      "horizon": 1,
+      "context_start_year": 1905,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1921,
+      "actual_count": 4,
+      "actual_log": 1.6094379124341003,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.29807159304618835,
+      "horizon": 1,
+      "context_start_year": 1906,
+      "residual": 1.6094379124341003,
+      "z_score": 939.5632264025234,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1922,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.6219380736351015,
+      "pred_std": 1.0066807270050049,
+      "horizon": 1,
+      "context_start_year": 1907,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 4.062893073846538
+    },
+    {
+      "year": 1923,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.5261363983154297,
+      "horizon": 1,
+      "context_start_year": 1908,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1924,
+      "actual_count": 2,
+      "actual_log": 1.0986122886681098,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.22911781072616577,
+      "horizon": 1,
+      "context_start_year": 1909,
+      "residual": 1.0986122886681098,
+      "z_score": 641.3516784536008,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1925,
+      "actual_count": 4,
+      "actual_log": 1.6094379124341003,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.5907149910926864,
+      "pred_std": 0.7487534284591675,
+      "horizon": 1,
+      "context_start_year": 1910,
+      "residual": 1.6094379124341003,
+      "z_score": 939.5632264025234,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.8052787122665921
+    },
+    {
+      "year": 1926,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.621484959125519,
+      "pred_std": 1.0440878868103027,
+      "horizon": 1,
+      "context_start_year": 1911,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 4.060599523194094
+    },
+    {
+      "year": 1927,
+      "actual_count": 4,
+      "actual_log": 1.6094379124341003,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.4566795825958252,
+      "horizon": 1,
+      "context_start_year": 1912,
+      "residual": 1.6094379124341003,
+      "z_score": 939.5632264025234,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1928,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.610930347442627,
+      "pred_std": 0.9675208926200867,
+      "horizon": 1,
+      "context_start_year": 1913,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 4.007467746219465
+    },
+    {
+      "year": 1929,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.6530561447143555,
+      "horizon": 1,
+      "context_start_year": 1914,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1930,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.17147722840309143,
+      "horizon": 1,
+      "context_start_year": 1915,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1931,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.6396622657775879,
+      "horizon": 1,
+      "context_start_year": 1916,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1932,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.3659481972455995,
+      "pred_std": 0.2998424470424652,
+      "horizon": 1,
+      "context_start_year": 1917,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.4418805473359527
+    },
+    {
+      "year": 1933,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.3670906871557253,
+      "pred_std": 0.34295904636383057,
+      "horizon": 1,
+      "context_start_year": 1918,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.4435288227025896
+    },
+    {
+      "year": 1934,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.34671661257743835,
+      "pred_std": 0.24337343871593475,
+      "horizon": 1,
+      "context_start_year": 1919,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.4144158409107186
+    },
+    {
+      "year": 1935,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.31423863768577576,
+      "horizon": 1,
+      "context_start_year": 1920,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1936,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.19984032213687897,
+      "horizon": 1,
+      "context_start_year": 1921,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1937,
+      "actual_count": 12,
+      "actual_log": 2.5649493574615367,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6940951943397522,
+      "pred_std": 0.42030516266822815,
+      "horizon": 1,
+      "context_start_year": 1922,
+      "residual": 2.5649493574615367,
+      "z_score": 1497.374999828903,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.0018969265738105
+    },
+    {
+      "year": 1938,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6920707821846008,
+      "pred_std": 0.6227871775627136,
+      "horizon": 1,
+      "context_start_year": 1923,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.9978483614671683
+    },
+    {
+      "year": 1939,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.34684494137763977,
+      "pred_lower": 0.0,
+      "pred_upper": 1.945162642002107,
+      "pred_std": 1.2156777381896973,
+      "horizon": 1,
+      "context_start_year": 1924,
+      "residual": -0.34684494137763977,
+      "z_score": -202.48233850121437,
+      "anomaly_flag": true,
+      "anomaly_type": "decline",
+      "predicted_count": 0.41459736227989197,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 5.994769405824133
+    },
+    {
+      "year": 1940,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.3716428875923157,
+      "horizon": 1,
+      "context_start_year": 1925,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1941,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6926605701446533,
+      "pred_std": 0.7432422041893005,
+      "horizon": 1,
+      "context_start_year": 1926,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.9990270159207089
+    },
+    {
+      "year": 1942,
+      "actual_count": 2,
+      "actual_log": 1.0986122886681098,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6926605701446533,
+      "pred_std": 0.7893003225326538,
+      "horizon": 1,
+      "context_start_year": 1927,
+      "residual": 1.0986122886681098,
+      "z_score": 641.3516784536008,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.9990270159207089
+    },
+    {
+      "year": 1943,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.8034177124500302,
+      "pred_std": 0.7851483225822449,
+      "horizon": 1,
+      "context_start_year": 1928,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.2331602002552389
+    },
+    {
+      "year": 1944,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6920592784881592,
+      "pred_std": 0.3426319360733032,
+      "horizon": 1,
+      "context_start_year": 1929,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.9978253789582736
+    },
+    {
+      "year": 1945,
+      "actual_count": 2,
+      "actual_log": 1.0986122886681098,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0692059338092863,
+      "pred_std": 0.429876446723938,
+      "horizon": 1,
+      "context_start_year": 1930,
+      "residual": 1.0986122886681098,
+      "z_score": 641.3516784536008,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.07165687680898951
+    },
+    {
+      "year": 1946,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.0974385738372803,
+      "pred_std": 0.5902966856956482,
+      "horizon": 1,
+      "context_start_year": 1931,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.9964809211090464
+    },
+    {
+      "year": 1947,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.7152597308158894,
+      "pred_std": 0.8545353412628174,
+      "horizon": 1,
+      "context_start_year": 1932,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.0447176894898558
+    },
+    {
+      "year": 1948,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.6475563645362854,
+      "horizon": 1,
+      "context_start_year": 1933,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1949,
+      "actual_count": 2,
+      "actual_log": 1.0986122886681098,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.8935403227806091,
+      "horizon": 1,
+      "context_start_year": 1934,
+      "residual": 1.0986122886681098,
+      "z_score": 641.3516784536008,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1950,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.06942460536957379,
+      "pred_std": 0.8303511738777161,
+      "horizon": 1,
+      "context_start_year": 1935,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.07189124331404492
+    },
+    {
+      "year": 1951,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6946002840995789,
+      "pred_std": 0.7888717651367188,
+      "horizon": 1,
+      "context_start_year": 1936,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.002908319612283
+    },
+    {
+      "year": 1952,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.301821768283844,
+      "horizon": 1,
+      "context_start_year": 1937,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1953,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.15883053839206696,
+      "horizon": 1,
+      "context_start_year": 1938,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1954,
+      "actual_count": 4,
+      "actual_log": 1.6094379124341003,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.29769080877304077,
+      "horizon": 1,
+      "context_start_year": 1939,
+      "residual": 1.6094379124341003,
+      "z_score": 939.5632264025234,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1955,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.0980526208877563,
+      "pred_std": 0.6747499704360962,
+      "horizon": 1,
+      "context_start_year": 1940,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.998321466413337
+    },
+    {
+      "year": 1956,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.5490263104438782,
+      "pred_std": 0.35020363330841064,
+      "horizon": 1,
+      "context_start_year": 1941,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.731566188862943
+    },
+    {
+      "year": 1957,
+      "actual_count": 4,
+      "actual_log": 1.6094379124341003,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.21400903165340424,
+      "horizon": 1,
+      "context_start_year": 1942,
+      "residual": 1.6094379124341003,
+      "z_score": 939.5632264025234,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1958,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.627893328666687,
+      "horizon": 1,
+      "context_start_year": 1943,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1959,
+      "actual_count": 2,
+      "actual_log": 1.0986122886681098,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.0,
+      "horizon": 1,
+      "context_start_year": 1944,
+      "residual": 1.0986122886681098,
+      "z_score": 641.3516784536008,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1960,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.10698646306992489,
+      "pred_std": 0.38187965750694275,
+      "horizon": 1,
+      "context_start_year": 1945,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.11291918886811582
+    },
+    {
+      "year": 1961,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.2889987528324127,
+      "horizon": 1,
+      "context_start_year": 1946,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1962,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.638512134552002,
+      "horizon": 1,
+      "context_start_year": 1947,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1963,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.6309781670570374,
+      "horizon": 1,
+      "context_start_year": 1948,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1964,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.1538003832101822,
+      "horizon": 1,
+      "context_start_year": 1949,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1965,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.0,
+      "horizon": 1,
+      "context_start_year": 1950,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1966,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.0,
+      "horizon": 1,
+      "context_start_year": 1951,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1967,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.4295845627784729,
+      "horizon": 1,
+      "context_start_year": 1952,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1968,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.00020997659885324538,
+      "horizon": 1,
+      "context_start_year": 1953,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1969,
+      "actual_count": 3,
+      "actual_log": 1.3862943611198906,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.3680833369493502,
+      "pred_std": 0.7373797297477722,
+      "horizon": 1,
+      "context_start_year": 1954,
+      "residual": 1.3862943611198906,
+      "z_score": 809.2957128787418,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.44496245271908746
+    },
+    {
+      "year": 1970,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.380791187286377,
+      "pred_std": 0.5313922762870789,
+      "horizon": 1,
+      "context_start_year": 1955,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 2.978047763554329
+    },
+    {
+      "year": 1971,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.26094159483909607,
+      "horizon": 1,
+      "context_start_year": 1956,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1972,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.225286066532135,
+      "horizon": 1,
+      "context_start_year": 1957,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1973,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.31621238589286804,
+      "horizon": 1,
+      "context_start_year": 1958,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1974,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.7116122364997879,
+      "pred_std": 0.6626792550086975,
+      "horizon": 1,
+      "context_start_year": 1959,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.037273178498785
+    },
+    {
+      "year": 1975,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.21446861326694489,
+      "horizon": 1,
+      "context_start_year": 1960,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1976,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.331795334815979,
+      "horizon": 1,
+      "context_start_year": 1961,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1977,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.09713546931743622,
+      "horizon": 1,
+      "context_start_year": 1962,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1978,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.19467395544052124,
+      "horizon": 1,
+      "context_start_year": 1963,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1979,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.09685206413269043,
+      "horizon": 1,
+      "context_start_year": 1964,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1980,
+      "actual_count": 2,
+      "actual_log": 1.0986122886681098,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.13793453574180603,
+      "horizon": 1,
+      "context_start_year": 1965,
+      "residual": 1.0986122886681098,
+      "z_score": 641.3516784536008,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1981,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.34944480657577515,
+      "horizon": 1,
+      "context_start_year": 1966,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1982,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6926915168762208,
+      "pred_std": 0.616774320602417,
+      "horizon": 1,
+      "context_start_year": 1967,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.9990888802304108
+    },
+    {
+      "year": 1983,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.24190399050712585,
+      "horizon": 1,
+      "context_start_year": 1968,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1984,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.22861891984939575,
+      "horizon": 1,
+      "context_start_year": 1969,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1985,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.0,
+      "horizon": 1,
+      "context_start_year": 1970,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1986,
+      "actual_count": 3,
+      "actual_log": 1.3862943611198906,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.0,
+      "pred_std": 0.3030492663383484,
+      "horizon": 1,
+      "context_start_year": 1971,
+      "residual": 1.3862943611198906,
+      "z_score": 809.2957128787418,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.0
+    },
+    {
+      "year": 1987,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.0465108275413517,
+      "pred_std": 0.5662458539009094,
+      "horizon": 1,
+      "context_start_year": 1972,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.8476976552577917
+    },
+    {
+      "year": 1988,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6925023198127747,
+      "pred_std": 0.47610557079315186,
+      "horizon": 1,
+      "context_start_year": 1973,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.9987106942616688
+    },
+    {
+      "year": 1989,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6925023198127747,
+      "pred_std": 0.4773313105106354,
+      "horizon": 1,
+      "context_start_year": 1974,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.9987106942616688
+    },
+    {
+      "year": 1990,
+      "actual_count": 2,
+      "actual_log": 1.0986122886681098,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.693798840045929,
+      "pred_std": 0.39548754692077637,
+      "horizon": 1,
+      "context_start_year": 1975,
+      "residual": 1.0986122886681098,
+      "z_score": 641.3516784536008,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.0013037437243124
+    },
+    {
+      "year": 1991,
+      "actual_count": 27,
+      "actual_log": 3.332204510175204,
+      "predicted_log": 0.6919551491737366,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3839102983474731,
+      "pred_std": 0.593960165977478,
+      "horizon": 1,
+      "context_start_year": 1976,
+      "residual": 2.6402493610014672,
+      "z_score": 1541.3338961165502,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.9976173639297485,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 2.990475107392698
+    },
+    {
+      "year": 1992,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.6946412324905396,
+      "pred_lower": 0.0,
+      "pred_upper": 1.657027184963227,
+      "pred_std": 1.121551513671875,
+      "horizon": 1,
+      "context_start_year": 1977,
+      "residual": -0.0014940519305942646,
+      "z_score": -0.8722027991741769,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 1.0029902458190918,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 4.2436991029929
+    },
+    {
+      "year": 1993,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.6913458108901978,
+      "pred_lower": 0.0,
+      "pred_upper": 1.4565617918968259,
+      "pred_std": 0.9331454634666443,
+      "horizon": 1,
+      "context_start_year": 1978,
+      "residual": -0.6913458108901978,
+      "z_score": -403.5962466284078,
+      "anomaly_flag": true,
+      "anomaly_type": "decline",
+      "predicted_count": 0.9964004755020142,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 3.2911801652251693
+    },
+    {
+      "year": 1994,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.691819304227829,
+      "pred_std": 0.5765628218650818,
+      "horizon": 1,
+      "context_start_year": 1979,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.997346009811118
+    },
+    {
+      "year": 1995,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3874270915985107,
+      "pred_std": 0.7403310537338257,
+      "horizon": 1,
+      "context_start_year": 1980,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 3.004533489040351
+    },
+    {
+      "year": 1996,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.05541743040085311,
+      "pred_std": 0.9137684106826782,
+      "horizon": 1,
+      "context_start_year": 1981,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.05698173891072361
+    },
+    {
+      "year": 1997,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3883434534072876,
+      "pred_std": 0.5653051733970642,
+      "horizon": 1,
+      "context_start_year": 1982,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 3.0082047724467227
+    },
+    {
+      "year": 1998,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6941720247268677,
+      "pred_std": 0.9863073825836182,
+      "horizon": 1,
+      "context_start_year": 1983,
+      "residual": 0.6931471805599453,
+      "z_score": 404.6478564393709,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 1.002050738998303
+    },
+    {
+      "year": 1999,
+      "actual_count": 0,
+      "actual_log": 0.0,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3803541541099549,
+      "pred_std": 0.5988821983337402,
+      "horizon": 1,
+      "context_start_year": 1984,
+      "residual": 0.0,
+      "z_score": 0.0,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 2.9763096045485056
+    },
+    {
+      "year": 2000,
+      "actual_count": 3,
+      "actual_log": 1.3862943611198906,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 0.6923710703849792,
+      "pred_std": 0.4628037214279175,
+      "horizon": 1,
+      "context_start_year": 1985,
+      "residual": 1.3862943611198906,
+      "z_score": 809.2957128787418,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 0.9984483818412726
+    },
+    {
+      "year": 2001,
+      "actual_count": 3,
+      "actual_log": 1.3862943611198906,
+      "predicted_log": 0.0,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3870927095413208,
+      "pred_std": 0.7411431670188904,
+      "horizon": 1,
+      "context_start_year": 1986,
+      "residual": 1.3862943611198906,
+      "z_score": 809.2957128787418,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 0.0,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 3.003194668745416
+    },
+    {
+      "year": 2002,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 1.2436902523040771,
+      "pred_lower": 0.0,
+      "pred_upper": 1.7427305221557627,
+      "pred_std": 0.7891753911972046,
+      "horizon": 1,
+      "context_start_year": 1987,
+      "residual": -0.5505430717441319,
+      "z_score": -321.3979369848183,
+      "anomaly_flag": true,
+      "anomaly_type": "decline",
+      "predicted_count": 2.4683890342712402,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 4.712921403448617
+    },
+    {
+      "year": 2003,
+      "actual_count": 5,
+      "actual_log": 1.791759469228055,
+      "predicted_log": 0.6941767334938049,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3883541822433472,
+      "pred_std": 0.5352098941802979,
+      "horizon": 1,
+      "context_start_year": 1988,
+      "residual": 1.09758273573425,
+      "z_score": 640.7506424839519,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 1.0020601749420166,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 3.0082477760493083
+    },
+    {
+      "year": 2004,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.6943025588989258,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3946950435638428,
+      "pred_std": 0.6711292862892151,
+      "horizon": 1,
+      "context_start_year": 1989,
+      "residual": -0.001155378338980495,
+      "z_score": -0.6744907594765952,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 1.002312183380127,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 3.033744268770623
+    },
+    {
+      "year": 2005,
+      "actual_count": 1,
+      "actual_log": 0.6931471805599453,
+      "predicted_log": 0.6943025588989258,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3886051177978516,
+      "pred_std": 0.5535055994987488,
+      "horizon": 1,
+      "context_start_year": 1990,
+      "residual": -0.001155378338980495,
+      "z_score": -0.6744907594765952,
+      "anomaly_flag": false,
+      "anomaly_type": "normal",
+      "predicted_count": 1.002312183380127,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 3.009253714135119
+    },
+    {
+      "year": 2006,
+      "actual_count": 5,
+      "actual_log": 1.791759469228055,
+      "predicted_log": 0.6952794790267944,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3846663236618042,
+      "pred_std": 0.49887627363204956,
+      "horizon": 1,
+      "context_start_year": 1991,
+      "residual": 1.0964799902012605,
+      "z_score": 640.1068778858447,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 1.0042691230773926,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 2.993493148304006
+    },
+    {
+      "year": 2007,
+      "actual_count": 4,
+      "actual_log": 1.6094379124341003,
+      "predicted_log": 0.6938048005104065,
+      "pred_lower": 0.0,
+      "pred_upper": 1.3876088857650757,
+      "pred_std": 0.6244262456893921,
+      "horizon": 1,
+      "context_start_year": 1992,
+      "residual": 0.9156331119236938,
+      "z_score": 534.5314623158748,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 1.0013155937194824,
+      "pred_lower_count": 0.0,
+      "pred_upper_count": 3.0052615560456344
+    },
+    {
+      "year": 2008,
+      "actual_count": 21,
+      "actual_log": 3.091042453358316,
+      "predicted_log": 1.3045966625213623,
+      "pred_lower": 0.6928051114082336,
+      "pred_upper": 1.7940298914909363,
+      "pred_std": 0.6246885657310486,
+      "horizon": 1,
+      "context_start_year": 1993,
+      "residual": 1.7864457908369538,
+      "z_score": 1042.8974973588504,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 2.686202049255371,
+      "pred_lower_count": 0.9993159786945405,
+      "pred_upper_count": 5.013638009739301
+    },
+    {
+      "year": 2009,
+      "actual_count": 20,
+      "actual_log": 3.044522437723423,
+      "predicted_log": 1.8064181804656982,
+      "pred_lower": 0.6955955028533936,
+      "pred_upper": 3.2224512100219727,
+      "pred_std": 1.0241777896881104,
+      "horizon": 1,
+      "context_start_year": 1994,
+      "residual": 1.2381042572577248,
+      "z_score": 722.7847819319958,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 5.088600158691406,
+      "pred_lower_count": 1.004902643763923,
+      "pred_upper_count": 24.089544611691714
+    },
+    {
+      "year": 2010,
+      "actual_count": 3,
+      "actual_log": 1.3862943611198906,
+      "predicted_log": 2.764674425125122,
+      "pred_lower": 1.3823378086090088,
+      "pred_upper": 3.4343788623809814,
+      "pred_std": 0.8384949564933777,
+      "horizon": 1,
+      "context_start_year": 1995,
+      "residual": -1.3783800640052315,
+      "z_score": -804.675477158986,
+      "anomaly_flag": true,
+      "anomaly_type": "decline",
+      "predicted_count": 14.873870849609375,
+      "pred_lower_count": 2.9842050573214323,
+      "pred_upper_count": 30.01214377271789
+    },
+    {
+      "year": 2011,
+      "actual_count": 18,
+      "actual_log": 2.9444389791664403,
+      "predicted_log": 1.042144775390625,
+      "pred_lower": 0.69476318359375,
+      "pred_upper": 2.628057718276979,
+      "pred_std": 0.816012442111969,
+      "horizon": 1,
+      "context_start_year": 1996,
+      "residual": 1.9022942037758153,
+      "z_score": 1110.5278842122514,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 1.8352916240692139,
+      "pred_lower_count": 1.0032346189406955,
+      "pred_upper_count": 12.846849284594379
+    },
+    {
+      "year": 2012,
+      "actual_count": 54,
+      "actual_log": 4.007333185232471,
+      "predicted_log": 2.3629579544067383,
+      "pred_lower": 1.3193178951740268,
+      "pred_upper": 3.2127926349639893,
+      "pred_std": 0.9572227001190186,
+      "horizon": 1,
+      "context_start_year": 1997,
+      "residual": 1.644375230825733,
+      "z_score": 959.9590548692761,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 9.62232494354248,
+      "pred_lower_count": 2.7408688421210177,
+      "pred_upper_count": 23.848381880855158
+    },
+    {
+      "year": 2013,
+      "actual_count": 27,
+      "actual_log": 3.332204510175204,
+      "predicted_log": 3.3393876552581787,
+      "pred_lower": 2.3166232109069824,
+      "pred_upper": 4.412675857543945,
+      "pred_std": 0.9552983641624451,
+      "horizon": 1,
+      "context_start_year": 1998,
+      "residual": -0.007183145082974907,
+      "z_score": -4.193401259990306,
+      "anomaly_flag": true,
+      "anomaly_type": "decline",
+      "predicted_count": 27.201852798461914,
+      "pred_lower_count": 9.141371149919989,
+      "pred_upper_count": 81.48989966510698
+    },
+    {
+      "year": 2014,
+      "actual_count": 20,
+      "actual_log": 3.044522437723423,
+      "predicted_log": 3.0627737045288086,
+      "pred_lower": 1.7968274354934692,
+      "pred_upper": 3.921711874008179,
+      "pred_std": 0.8046118021011353,
+      "horizon": 1,
+      "context_start_year": 1999,
+      "residual": -0.01825126680538558,
+      "z_score": -10.654787608219399,
+      "anomaly_flag": true,
+      "anomaly_type": "decline",
+      "predicted_count": 20.386795043945312,
+      "pred_lower_count": 5.030484980770851,
+      "pred_upper_count": 49.486797881209874
+    },
+    {
+      "year": 2015,
+      "actual_count": 27,
+      "actual_log": 3.332204510175204,
+      "predicted_log": 3.0502727031707764,
+      "pred_lower": 1.9932482242584229,
+      "pred_upper": 3.4972441673278816,
+      "pred_std": 0.7183967232704163,
+      "horizon": 1,
+      "context_start_year": 2000,
+      "residual": 0.28193180700442744,
+      "z_score": 164.58712459056704,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 20.121103286743164,
+      "pred_lower_count": 6.339334891314857,
+      "pred_upper_count": 32.024316948330075
+    },
+    {
+      "year": 2016,
+      "actual_count": 37,
+      "actual_log": 3.6375861597263857,
+      "predicted_log": 3.1300323009490967,
+      "pred_lower": 1.7849212527275087,
+      "pred_upper": 4.012862205505371,
+      "pred_std": 0.8633571863174438,
+      "horizon": 1,
+      "context_start_year": 2001,
+      "residual": 0.507553858777289,
+      "z_score": 296.301545677281,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 21.874717712402344,
+      "pred_lower_count": 4.9591106653941095,
+      "pred_upper_count": 54.304938343318916
+    },
+    {
+      "year": 2017,
+      "actual_count": 37,
+      "actual_log": 3.6375861597263857,
+      "predicted_log": 3.5675721168518066,
+      "pred_lower": 3.1559274196624756,
+      "pred_upper": 3.809411883354187,
+      "pred_std": 0.25845637917518616,
+      "horizon": 1,
+      "context_start_year": 2002,
+      "residual": 0.07001404287457902,
+      "z_score": 40.87303990325106,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 34.43046951293945,
+      "pred_lower_count": 22.474797988356496,
+      "pred_upper_count": 44.1238929484689
+    },
+    {
+      "year": 2018,
+      "actual_count": 45,
+      "actual_log": 3.828641396489095,
+      "predicted_log": 3.541566848754883,
+      "pred_lower": 3.156734895706177,
+      "pred_upper": 3.8669090270996094,
+      "pred_std": 0.2700764834880829,
+      "horizon": 1,
+      "context_start_year": 2003,
+      "residual": 0.28707454773421226,
+      "z_score": 167.58937154604016,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 33.520965576171875,
+      "pred_lower_count": 22.493760980413374,
+      "pred_upper_count": 46.79442625237547
+    },
+    {
+      "year": 2019,
+      "actual_count": 55,
+      "actual_log": 4.02535169073515,
+      "predicted_log": 3.74101185798645,
+      "pred_lower": 3.3649510622024534,
+      "pred_upper": 4.034809589385986,
+      "pred_std": 0.25608202815055847,
+      "horizon": 1,
+      "context_start_year": 2004,
+      "residual": 0.28433983274869945,
+      "z_score": 165.99289018119288,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 41.14060974121094,
+      "pred_lower_count": 27.932081392062994,
+      "pred_upper_count": 55.53215489111299
+    },
+    {
+      "year": 2020,
+      "actual_count": 26,
+      "actual_log": 3.295836866004329,
+      "predicted_log": 3.8399314880371094,
+      "pred_lower": 3.498368763923645,
+      "pred_upper": 4.202707958221436,
+      "pred_std": 0.2655092775821686,
+      "horizon": 1,
+      "context_start_year": 2005,
+      "residual": -0.5440946220327803,
+      "z_score": -317.6334387278282,
+      "anomaly_flag": true,
+      "anomaly_type": "decline",
+      "predicted_count": 45.52228546142578,
+      "pred_lower_count": 32.061476873794014,
+      "pred_upper_count": 65.8671595668697
+    },
+    {
+      "year": 2021,
+      "actual_count": 23,
+      "actual_log": 3.1780538303479458,
+      "predicted_log": 3.474268913269043,
+      "pred_lower": 3.0357701778411865,
+      "pred_upper": 3.82506787776947,
+      "pred_std": 0.30054259300231934,
+      "horizon": 1,
+      "context_start_year": 2006,
+      "residual": -0.2962150829210972,
+      "z_score": -172.925464765223,
+      "anomaly_flag": true,
+      "anomaly_type": "decline",
+      "predicted_count": 31.27422332763672,
+      "pred_lower_count": 19.81700452261167,
+      "pred_upper_count": 44.83591150017812
+    },
+    {
+      "year": 2022,
+      "actual_count": 34,
+      "actual_log": 3.5553480614894135,
+      "predicted_log": 3.219900131225586,
+      "pred_lower": 2.8237818241119386,
+      "pred_upper": 3.662344837188721,
+      "pred_std": 0.28351035714149475,
+      "horizon": 1,
+      "context_start_year": 2007,
+      "residual": 0.3354479302638276,
+      "z_score": 195.82895196749976,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 24.02562141418457,
+      "pred_lower_count": 15.840417894799312,
+      "pred_upper_count": 37.95257331176481
+    },
+    {
+      "year": 2023,
+      "actual_count": 99,
+      "actual_log": 4.605170185988092,
+      "predicted_log": 3.4967947006225586,
+      "pred_lower": 2.990361452102661,
+      "pred_upper": 3.858530044555664,
+      "pred_std": 0.3075382709503174,
+      "horizon": 1,
+      "context_start_year": 2008,
+      "residual": 1.1083754853655332,
+      "z_score": 647.0512711611941,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 32.00947570800781,
+      "pred_lower_count": 18.89287151247925,
+      "pred_upper_count": 46.395630672904055
+    },
+    {
+      "year": 2024,
+      "actual_count": 120,
+      "actual_log": 4.795790545596741,
+      "predicted_log": 3.376214027404785,
+      "pred_lower": 2.9421298503875732,
+      "pred_upper": 3.8850587129592897,
+      "pred_std": 0.34972864389419556,
+      "horizon": 2,
+      "context_start_year": 2008,
+      "residual": 1.4195765181919562,
+      "z_score": 828.7252855504654,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 28.259784698486328,
+      "pred_lower_count": 17.95617716895391,
+      "pred_upper_count": 47.66979992358606
+    },
+    {
+      "year": 2025,
+      "actual_count": 80,
+      "actual_log": 4.394449154672439,
+      "predicted_log": 3.3279824256896973,
+      "pred_lower": 2.816726040840149,
+      "pred_upper": 3.788595509529114,
+      "pred_std": 0.3647315204143524,
+      "horizon": 3,
+      "context_start_year": 2008,
+      "residual": 1.0664667289827419,
+      "z_score": 622.5856325321271,
+      "anomaly_flag": true,
+      "anomaly_type": "surge",
+      "predicted_count": 26.882030487060547,
+      "pred_lower_count": 15.722013764089262,
+      "pred_upper_count": 43.19428621303528
+    }
+  ]
+}
 
 Task: Analyze the data and identify:
 1. Key threats to this species
@@ -300,7 +3105,13 @@ Task: Analyze the data and identify:
 4. Relevant insights from recent conservation news
 5. Early warning signals that may require urgent attention
 6. Temporal trends in conservation status from IUCN assessment history
+7. **Anomalous patterns detected in occurrence data** - Pay special attention to:
+   - Anomaly episodes (declines/surges) from the time-series analysis
+   - Years with significant deviations from expected occurrence counts
+   - Whether these anomalies correlate with known threats or conservation events
+   - How anomaly detection complements or contradicts other data sources
 
 Provide a detailed but concise analysis focusing on evidence-based conclusions.
 Consider how news articles complement or contradict the scientific data.
 Pay attention to how the conservation status has changed over time based on assessment history.
+**When anomaly detection data is available, integrate these findings into your analysis** - explain what the anomalies reveal about population dynamics, whether they align with reported threats, and if they suggest emerging conservation concerns.

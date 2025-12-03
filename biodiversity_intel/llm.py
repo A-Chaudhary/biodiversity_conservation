@@ -138,6 +138,9 @@ GBIF Occurrence Data:
 Conservation News Articles:
 {news_data}
 
+Anomaly Detection Results (Time-Series Analysis):
+{anomaly_data}
+
 Task: Analyze the data and identify:
 1. Key threats to this species
 2. Population trend (increasing, stable, decreasing, or unknown)
@@ -145,10 +148,16 @@ Task: Analyze the data and identify:
 4. Relevant insights from recent conservation news
 5. Early warning signals that may require urgent attention
 6. Temporal trends in conservation status from IUCN assessment history
+7. **Anomalous patterns detected in occurrence data** - Pay special attention to:
+   - Anomaly episodes (declines/surges) from the time-series analysis
+   - Years with significant deviations from expected occurrence counts
+   - Whether these anomalies correlate with known threats or conservation events
+   - How anomaly detection complements or contradicts other data sources
 
 Provide a detailed but concise analysis focusing on evidence-based conclusions.
 Consider how news articles complement or contradict the scientific data.
 Pay attention to how the conservation status has changed over time based on assessment history.
+**When anomaly detection data is available, integrate these findings into your analysis** - explain what the anomalies reveal about population dynamics, whether they align with reported threats, and if they suggest emerging conservation concerns.
 """)
 
 REPORT_PROMPT = PromptTemplate("""

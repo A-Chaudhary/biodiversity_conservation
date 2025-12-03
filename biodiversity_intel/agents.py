@@ -231,6 +231,17 @@ class AnalysisAgent(BaseAgent):
             else:
                 news_summary = "No recent conservation news articles available"
 
+            # Format anomaly detection data (exclude figure_json)
+            anomaly_data = state.get("anomaly_detection")
+            if anomaly_data:
+                # Create a copy without figure_json for the prompt
+                anomaly_summary = {k: v for k, v in anomaly_data.items() if k != 'figure_json'}
+                anomaly_summary_str = json.dumps(anomaly_summary, indent=2)
+                logger.debug(f"AnalysisAgent: Formatted anomaly detection data - {anomaly_data.get('num_anomalies', 0)} anomalies found")
+            else:
+                anomaly_summary_str = "No anomaly detection data available"
+                logger.debug(f"AnalysisAgent: No anomaly detection data to format")
+
             # Initialize LLM client
             logger.debug(f"AnalysisAgent: Initializing LLM client")
             llm_client = LLMClient()
@@ -241,7 +252,8 @@ class AnalysisAgent(BaseAgent):
                 species_name=species_name,
                 iucn_data=iucn_summary,
                 gbif_data=gbif_summary,
-                news_data=news_summary
+                news_data=news_summary,
+                anomaly_data=anomaly_summary_str
             )
 
             with open('analysis_prompt.txt', 'w', encoding='utf-8') as f:
