@@ -10,15 +10,17 @@ Global biodiversity loss is accelerating, yet conservation intelligence systems 
 
 - **Multi-Agent Architecture**: Three specialized agents (Data, Analysis, Report) working collaboratively
 - **Multi-Source Integration**: Combines IUCN Red List, GBIF occurrence data, and conservation news
+- **Time-Series Anomaly Detection**: Chronos-based forecasting model identifies population anomalies, declines, and surges in occurrence data
 - **Automated Threat Detection**: Identifies threats and inconsistencies across data sources
-- **Explainable AI**: Generates transparent, evidence-based conservation insights
+- **Explainable AI**: Generates transparent, evidence-based conservation insights with anomaly correlation
 - **Streamlit Interface**: Interactive web app for species queries and visualization
 - **Comprehensive Evaluation**: Quantitative metrics including threat detection recall, precision, F1-score, and confidence alignment scoring
 - **Automated Evaluation Script**: Run systematic evaluations on test species sets with detailed metrics and statistics
-- **Performance Optimizations**: 
+- **Performance Optimizations**:
   - Parallel API calls for multi-source data retrieval (40-50% faster)
   - Parallel pagination for GBIF occurrence data (5x faster for large datasets)
   - File-based caching system (96% faster on repeated queries)
+  - GPU-accelerated anomaly detection (when available)
 
 ## System Architecture
 
@@ -38,9 +40,12 @@ User Query (Species Name)
         │                      News Sources
         │
         ▼
-   Analysis Agent ──────► LLM Client
-   (agents.py)           (llm.py)
+   Analysis Agent ──────► Anomaly Detection
+   (agents.py)           (anomaly_detection.py)
+        │                Chronos Model
         │
+        ├──────────────► LLM Client
+        │                (llm.py)
         ▼
    Report Agent
    (agents.py)
@@ -56,8 +61,10 @@ User Query (Species Name)
 - **Package Management**: uv
 - **Agent Framework**: LangGraph
 - **LLM**: OpenAI GPT-4o-mini
+- **Time-Series Forecasting**: Chronos (Amazon, pretrained transformer model)
+- **Deep Learning**: PyTorch (with automatic GPU/CPU detection)
 - **Frontend**: Streamlit
-- **Data Storage**: SQLite / JSON
+- **Data Storage**: JSON file-based caching
 - **Testing**: pytest
 
 ## Installation
@@ -165,6 +172,7 @@ biodiversity_conservation/
 │   ├── __init__.py
 │   ├── agents.py              # All three agents (Data, Analysis, Report)
 │   ├── data_sources.py        # API clients (IUCN, GBIF, News)
+│   ├── anomaly_detection.py   # Chronos-based time-series anomaly detection
 │   ├── llm.py                 # LLM client and prompts
 │   ├── workflow.py            # LangGraph orchestration
 │   ├── analysis.py            # Threat detection and evaluation
@@ -222,8 +230,13 @@ The system includes comprehensive evaluation metrics implemented in `biodiversit
    - Returns: 1.0 (perfect match), 0.7 (partial alignment), 0.5 (neutral/unknown), 0.0 (contradiction)
    - Handles variations in terminology and unknown values gracefully
 
-5. **Early Warning Signal**: Binary flag indicating data contradictions or high-risk conditions
-   - Triggers on: declining populations, critical conservation status, high threat counts
+5. **Temporal Anomaly Metrics**: Statistical analysis of GBIF occurrence patterns
+   - Detects anomalous years using Chronos forecasting model (z-score threshold: 2.0)
+   - Classifies episodes as population declines or surges
+   - Reports episode severity, duration, and correlation with known threats
+
+6. **Early Warning Signal**: Binary flag indicating data contradictions or high-risk conditions
+   - Triggers on: declining populations, critical conservation status, high threat counts, anomalous patterns
 
 ### Performance Metrics
 
@@ -264,10 +277,16 @@ For detailed evaluation methodology and best practices, see [EVALUATION_GUIDE.md
 - **Implementation**: `biodiversity_intel/data_sources.py` (GBIFClient.get_occurrences)
 
 ### File-Based Caching
-- **All API clients** (IUCN, GBIF, News) support persistent file-based caching
+- **All API clients** (IUCN, GBIF, News) and **anomaly detection** support persistent file-based caching
 - **Performance**: 96% faster on repeated queries (77.6s → <2s)
 - **Storage**: JSON files in `data/cache/{source}/` directories
 - **Implementation**: `biodiversity_intel/storage.py` (FileCache)
+
+### GPU-Accelerated Anomaly Detection
+- **Chronos model** automatically detects and uses GPU when available (CUDA)
+- **Fallback**: CPU inference when GPU unavailable
+- **Performance**: Faster time-series forecasting on compatible hardware
+- **Implementation**: `biodiversity_intel/anomaly_detection.py` (GBIFAnomalyDetector)
 
 ### Combined Impact
 - **First query**: ~77.6 seconds (with parallel optimizations)
@@ -297,6 +316,7 @@ MIT License - See LICENSE file for details
 2. Global Biodiversity Information Facility (GBIF). https://www.gbif.org
 3. LangGraph: Building Agentic Workflows with Large Language Models, 2024
 4. Park et al., "Generative Agents: Interactive Simulacra of Human Behavior," 2023
+5. Ansari et al., "Chronos: Learning the Language of Time Series," arXiv:2403.07815, 2024
 
 ## Contact
 
