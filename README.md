@@ -112,18 +112,72 @@ User Query (Species Name)
 
    # Edit .env and add your OpenAI API key
    # - OPENAI_API_KEY (required)
-   # - IUCN_API_TOKEN (optional)
+   # - IUCN_API_TOKEN (required)
    ```
 
-## Usage
+5. **Optional: Configure MCP Server**
 
-### Running the Streamlit App
+   The Model Context Protocol (MCP) server exposes biodiversity data and analysis functions to AI assistants like Claude Desktop.
 
-```bash
-streamlit run app.py
-```
+   To use the MCP server, add this configuration to your Claude Desktop config file:
 
-The application will be available at `http://localhost:8501`
+   **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+   **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+   ```json
+   {
+     "mcpServers": {
+       "biodiversity-conservation-intel": {
+         "command": "/path/to/biodiversity_conservation/.venv/Scripts/python",
+         "args": [
+           "/path/to/biodiversity_conservation/mcp_server.py"
+         ]
+       }
+     }
+   }
+   ```
+
+   Replace `/path/to/biodiversity_conservation` with the actual path to your project directory. On Windows, use forward slashes or escaped backslashes in the paths.
+
+   After configuring, restart Claude Desktop to load the MCP server.
+
+## Tutorial
+
+### Quick Start: Analyzing a Species
+
+1. **Launch the Streamlit Web Application**
+
+   ```bash
+   streamlit run app.py
+   ```
+
+   The application will be available at `http://localhost:8501`
+
+2. **Enter a species name** (e.g., "Panthera tigris" for Tiger)
+
+3. **View the analysis results:**
+   - Conservation status and population trends
+   - Identified threats from multiple sources
+   - GBIF occurrence data with temporal anomaly detection
+   - Recent conservation news articles
+
+### Using the MCP Server with Claude Desktop
+
+Once configured (see Installation step 5), you can query biodiversity data directly in Claude Desktop:
+
+**Example queries:**
+- "Get IUCN data for the African Elephant"
+- "What are the threats to Panthera tigris?"
+- "Show me GBIF occurrence data for Giant Panda"
+- "Run a full conservation analysis on the Mountain Gorilla"
+
+**Available MCP tools:**
+- `get_iucn_data` - Retrieve IUCN Red List data and threats
+- `get_gbif_data` - Get species occurrence records with temporal analysis
+- `get_news_data` - Search conservation news articles
+- `get_threat_classifications` - View all IUCN threat classification codes
+- `run_full_analysis` - Execute complete multi-agent workflow
 
 ### Running System Evaluation
 
@@ -137,9 +191,43 @@ This will:
 - Run analysis on test species (default: Tiger, Giant Panda, Mountain Gorilla)
 - Calculate quantitative metrics (threat detection, confidence alignment, etc.)
 - Generate summary statistics and detailed results
-- Save results to `data/outputs/` (CSV, JSON formats)
+- Save results to evaluation output files (CSV, JSON formats)
 
-For detailed evaluation guidance, see [EVALUATION_GUIDE.md](EVALUATION_GUIDE.md).
+### Managing Cache
+
+Clear cached data to force fresh API requests:
+
+```bash
+# Clear specific cache
+python clear_cache.py iucn      # Clear IUCN cache only
+python clear_cache.py gbif      # Clear GBIF cache only
+python clear_cache.py anomaly   # Clear anomaly detection cache
+python clear_cache.py news      # Clear news cache only
+
+# Clear all caches
+python clear_cache.py all
+```
+
+### Testing Components
+
+Test individual components of the system:
+
+```bash
+# Test agents
+python test_agents.py
+
+# Test data sources (API connections)
+python test_data_sources.py
+
+# Test live API endpoints
+python test_api_live.py
+
+# Test performance and caching
+python test_performance.py
+
+# Test MCP server handlers
+python test_mcp_server.py
+```
 
 ### Development
 
@@ -153,6 +241,8 @@ pytest --cov=biodiversity_intel --cov-report=html
 # Test individual components
 python test_agents.py
 python test_data_sources.py
+python test_api_live.py
+python test_performance.py
 
 # Format code
 black biodiversity_intel/ app.py tests/
@@ -172,23 +262,26 @@ biodiversity_conservation/
 │   ├── __init__.py
 │   ├── agents.py              # All three agents (Data, Analysis, Report)
 │   ├── data_sources.py        # API clients (IUCN, GBIF, News)
-│   ├── anomaly_detection.py   # Chronos-based time-series anomaly detection
+│   ├── anomaly_detection.py   # Chronos-based time-series anomaly detection (run to build standalone visual)
 │   ├── llm.py                 # LLM client and prompts
 │   ├── workflow.py            # LangGraph orchestration
 │   ├── analysis.py            # Threat detection and evaluation
 │   ├── storage.py             # Caching and database
 │   └── config.py              # Configuration management
 ├── app.py                     # Streamlit web application
+├── mcp_server.py              # Model Context Protocol server (exposes tools to Claude Desktop)
 ├── evaluate_system.py         # System evaluation script
+├── clear_cache.py             # Utility to clear specific cache directories (anomaly, gbif, iucn, news)
 ├── test_agents.py             # Agent testing script
+├── test_api_live.py           # API Testing Script
 ├── test_data_sources.py       # Data source testing script
+├── test_performance.py        # Performance and caching tests
+├── test_mcp_server.py         # MCP Server handler tests
 ├── config/
 │   ├── settings.yaml          # Application settings
 │   └── prompts/               # Prompt templates
 ├── data/                      # Local data storage
-│   ├── cache/                 # API response cache
-│   ├── outputs/               # Generated reports and evaluation results
-│   └── sample/                # Sample test data
+│   └── cache/                 # API response cache
 ├── tests/                     # Test suite
 ├── notebooks/                 # Jupyter notebooks for exploration
 ├── EVALUATION_GUIDE.md        # Comprehensive evaluation guide
