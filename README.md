@@ -4,34 +4,40 @@ An agentic threat intelligence system leveraging large language models (LLMs) to
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [System Architecture](#system-architecture)
-- [Technology Stack](#technology-stack)
-- [Installation](#installation)
-  - [Prerequisites](#prerequisites)
-  - [Setup](#setup)
-- [Tutorial](#tutorial)
-  - [Quick Start: Analyzing a Species](#quick-start-analyzing-a-species)
-  - [Using the MCP Server with Claude Desktop](#using-the-mcp-server-with-claude-desktop)
-  - [Running System Evaluation](#running-system-evaluation)
-  - [Managing Cache](#managing-cache)
-  - [Testing Components](#testing-components)
-  - [Development](#development)
-- [Project Structure](#project-structure)
-- [Development Timeline](#development-timeline)
-- [Evaluation Metrics](#evaluation-metrics)
-  - [Quantitative Metrics](#quantitative-metrics)
-  - [Performance Metrics](#performance-metrics)
-  - [Evaluation Outputs](#evaluation-outputs)
-- [Data Sources](#data-sources)
-- [Performance Optimizations](#performance-optimizations)
-- [Contributing](#contributing)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgments)
-- [License](#license)
-- [References](#references)
-- [Contact](#contact)
+- [Biodiversity Conservation Intelligence System](#biodiversity-conservation-intelligence-system)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Features](#features)
+  - [System Architecture](#system-architecture)
+  - [Technology Stack](#technology-stack)
+  - [Installation](#installation)
+    - [Prerequisites](#prerequisites)
+    - [Setup](#setup)
+  - [Tutorial](#tutorial)
+    - [Quick Start: Analyzing a Species](#quick-start-analyzing-a-species)
+    - [Using the MCP Server with Claude Desktop](#using-the-mcp-server-with-claude-desktop)
+    - [Running System Evaluation](#running-system-evaluation)
+    - [Managing Cache](#managing-cache)
+    - [Development and Testing](#development-and-testing)
+  - [Project Structure](#project-structure)
+  - [Development Timeline](#development-timeline)
+  - [Evaluation Metrics](#evaluation-metrics)
+    - [Quantitative Metrics](#quantitative-metrics)
+    - [Performance Metrics](#performance-metrics)
+    - [Evaluation Outputs](#evaluation-outputs)
+  - [Data Sources](#data-sources)
+  - [Performance Optimizations](#performance-optimizations)
+    - [Parallel API Calls](#parallel-api-calls)
+    - [Parallel GBIF Pagination](#parallel-gbif-pagination)
+    - [File-Based Caching](#file-based-caching)
+    - [GPU-Accelerated Anomaly Detection](#gpu-accelerated-anomaly-detection)
+    - [Combined Impact](#combined-impact)
+  - [Contributing](#contributing)
+  - [Authors](#authors)
+  - [Acknowledgments](#acknowledgments)
+  - [License](#license)
+  - [References](#references)
+  - [Contact](#contact)
 
 ## Overview
 
@@ -59,32 +65,42 @@ Global biodiversity loss is accelerating, yet conservation intelligence systems 
 User Query (Species Name)
         │
         ▼
-   Streamlit App
-     (app.py)
-        │
-        ▼
-  LangGraph Workflow
-   (workflow.py)
-        │
-        ├─► Data Agent ──────► IUCN API
-        │   (agents.py)        GBIF API
-        │                      News Sources
-        │
-        ▼
-   Analysis Agent ──────► Anomaly Detection
-   (agents.py)           (anomaly_detection.py)
-        │                Chronos Model
-        │
-        ├──────────────► LLM Client
-        │                (llm.py)
-        ▼
-   Report Agent
-   (agents.py)
-        │
-        ▼
-   Storage & Output
+   Streamlit App ◄─────────────────────────────────────────┐
+     (app.py)                                              │
+        │                                                  │
+        ▼                                                  │
+  LangGraph Workflow                                       │
+   (workflow.py)                                           │
+        │                                                  │
+        ├─► Data Agent ──────► IUCN API ──────────┐        │
+        │   (agents.py)    ┌─► GBIF API ──────────┤        │
+        │                  └─► News Sources ──────┤        │
+        │                                         │        │
+        ▼                                         ▼        │
+   Analysis Agent ──────► Anomaly Detection ─────────────► │
+   (agents.py)      │     (anomaly_detection.py)           │
+        │           │     Chronos Model                    │
+        │           │            │                         │
+        │           └──────► LLM Client ───────────────────┤
+        │                   (llm.py)                       │
+        ▼                                                  │
+   Report Agent                                            │
+   (agents.py)                                             │
+        │                                                  │
+        ├──────────────► LLM Client ───────────────────────┤
+        │                (llm.py)                          │
+        ▼                                                  │
+   Storage & Output ───────────────────────────────────────┘
     (storage.py)
 ```
+
+**Key Components:**
+- [`app.py`](app.py) - Streamlit web interface
+- [`workflow.py`](biodiversity_intel/workflow.py) - LangGraph orchestration
+- [`agents.py`](biodiversity_intel/agents.py) - Multi-agent system
+- [`anomaly_detection.py`](biodiversity_intel/anomaly_detection.py) - Chronos-based forecasting
+- [`llm.py`](biodiversity_intel/llm.py) - LLM client integration
+- [`storage.py`](biodiversity_intel/storage.py) - Caching system
 
 ## Technology Stack
 
@@ -148,7 +164,7 @@ User Query (Species Name)
 
 5. **Optional: Configure MCP Server**
 
-   The Model Context Protocol (MCP) server exposes biodiversity data and analysis functions to AI assistants like Claude Desktop.
+   The Model Context Protocol (MCP) server ([`mcp_server.py`](mcp_server.py)) exposes biodiversity data and analysis functions to AI assistants like Claude Desktop.
 
    To use the MCP server, add this configuration to your Claude Desktop config file:
 
@@ -212,7 +228,7 @@ Once configured (see Installation step 5), you can query biodiversity data direc
 
 ### Running System Evaluation
 
-Evaluate the system's performance on a test set of species:
+Evaluate the system's performance on a test set of species using [`evaluate_system.py`](evaluate_system.py):
 
 ```bash
 python evaluate_system.py
@@ -226,7 +242,7 @@ This will:
 
 ### Managing Cache
 
-Clear cached data to force fresh API requests:
+Clear cached data to force fresh API requests using [`clear_cache.py`](clear_cache.py):
 
 ```bash
 # Clear specific cache
@@ -239,50 +255,14 @@ python clear_cache.py news      # Clear news cache only
 python clear_cache.py all
 ```
 
-### Testing Components
-
-Test individual components of the system:
+### Development and Testing
 
 ```bash
-# Test agents
-python test_agents.py
-
-# Test data sources (API connections)
-python test_data_sources.py
-
-# Test live API endpoints
-python test_api_live.py
-
-# Test performance and caching
-python test_performance.py
-
-# Test MCP server handlers
-python test_mcp_server.py
-```
-
-### Development
-
-```bash
-# Run tests
-pytest
-
-# Run tests with coverage
-pytest --cov=biodiversity_intel --cov-report=html
-
 # Test individual components
 python test_agents.py
 python test_data_sources.py
 python test_api_live.py
 python test_performance.py
-
-# Format code
-black biodiversity_intel/ app.py tests/
-
-# Lint code
-ruff check biodiversity_intel/ app.py tests/
-
-# Type checking
-mypy biodiversity_intel/
 ```
 
 ## Project Structure
@@ -333,7 +313,7 @@ biodiversity_conservation/
 
 ## Evaluation Metrics
 
-The system includes comprehensive evaluation metrics implemented in `biodiversity_intel/analysis.py`:
+The system includes comprehensive evaluation metrics implemented in [`biodiversity_intel/analysis.py`](biodiversity_intel/analysis.py):
 
 ### Quantitative Metrics
 
@@ -372,7 +352,7 @@ The system includes comprehensive evaluation metrics implemented in `biodiversit
 
 ### Evaluation Outputs
 
-Running `evaluate_system.py` generates:
+Running [`evaluate_system.py`](evaluate_system.py) generates:
 - **evaluation_results.csv**: Detailed metrics per species
 - **evaluation_summary.json**: Aggregated statistics and averages
 - **evaluation_full_results.json**: Complete evaluation data including system outputs
@@ -392,25 +372,25 @@ For detailed evaluation methodology and best practices, see [EVALUATION_GUIDE.md
 ### Parallel API Calls
 - **DataAgent** fetches IUCN, GBIF, and News data concurrently using `asyncio.gather()`
 - **Performance**: 40-50% faster than sequential calls (77s → 40-45s)
-- **Implementation**: `biodiversity_intel/agents.py` (DataAgent)
+- **Implementation**: [`biodiversity_intel/agents.py`](biodiversity_intel/agents.py) (DataAgent)
 
 ### Parallel GBIF Pagination
 - **GBIF Client** uses `ThreadPoolExecutor` for concurrent batch requests
 - **Performance**: 5x faster for large datasets (68s → 14s for 10,000 records)
 - **Rate Limiting**: Max 5 concurrent requests with 0.1s delays to respect API limits
-- **Implementation**: `biodiversity_intel/data_sources.py` (GBIFClient.get_occurrences)
+- **Implementation**: [`biodiversity_intel/data_sources.py`](biodiversity_intel/data_sources.py) (GBIFClient.get_occurrences)
 
 ### File-Based Caching
 - **All API clients** (IUCN, GBIF, News) and **anomaly detection** support persistent file-based caching
 - **Performance**: 96% faster on repeated queries (77.6s → <2s)
 - **Storage**: JSON files in `data/cache/{source}/` directories
-- **Implementation**: `biodiversity_intel/storage.py` (FileCache)
+- **Implementation**: [`biodiversity_intel/storage.py`](biodiversity_intel/storage.py) (FileCache)
 
 ### GPU-Accelerated Anomaly Detection
 - **Chronos model** automatically detects and uses GPU when available (CUDA)
 - **Fallback**: CPU inference when GPU unavailable
 - **Performance**: Faster time-series forecasting on compatible hardware
-- **Implementation**: `biodiversity_intel/anomaly_detection.py` (GBIFAnomalyDetector)
+- **Implementation**: [`biodiversity_intel/anomaly_detection.py`](biodiversity_intel/anomaly_detection.py) (GBIFAnomalyDetector)
 
 ### Combined Impact
 - **First query**: ~77.6 seconds (with parallel optimizations)
