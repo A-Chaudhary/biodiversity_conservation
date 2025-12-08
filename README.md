@@ -2,6 +2,37 @@
 
 An agentic threat intelligence system leveraging large language models (LLMs) to synthesize information from multiple open biodiversity sources into coherent, explainable threat summaries.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [System Architecture](#system-architecture)
+- [Technology Stack](#technology-stack)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+- [Tutorial](#tutorial)
+  - [Quick Start: Analyzing a Species](#quick-start-analyzing-a-species)
+  - [Using the MCP Server with Claude Desktop](#using-the-mcp-server-with-claude-desktop)
+  - [Running System Evaluation](#running-system-evaluation)
+  - [Managing Cache](#managing-cache)
+  - [Testing Components](#testing-components)
+  - [Development](#development)
+- [Project Structure](#project-structure)
+- [Development Timeline](#development-timeline)
+- [Evaluation Metrics](#evaluation-metrics)
+  - [Quantitative Metrics](#quantitative-metrics)
+  - [Performance Metrics](#performance-metrics)
+  - [Evaluation Outputs](#evaluation-outputs)
+- [Data Sources](#data-sources)
+- [Performance Optimizations](#performance-optimizations)
+- [Contributing](#contributing)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
+- [References](#references)
+- [Contact](#contact)
+
 ## Overview
 
 Global biodiversity loss is accelerating, yet conservation intelligence systems remain fragmented and reactive. This project proposes a multi-agent LLM-based system that automates data retrieval, reasoning, and reporting for any queried species, enabling transparent, evidence-based ecological assessment at scale.
@@ -78,7 +109,7 @@ User Query (Species Name)
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/biodiversity_conservation.git
+   git clone https://github.com/A-Chaudhary/biodiversity_conservation.git
    cd biodiversity_conservation
    ```
 
