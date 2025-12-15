@@ -110,6 +110,7 @@ User Query (Species Name)
 - **LLM**: OpenAI GPT-4o-mini
 - **Time-Series Forecasting**: Chronos (Amazon, pretrained transformer model)
 - **Deep Learning**: PyTorch (with automatic GPU/CPU detection)
+  - Please note that CUDA must be installed to use GPU. Change the version in the pyproject index for respective cuda version
 - **Frontend**: Streamlit
 - **Data Storage**: JSON file-based caching
 - **Testing**: pytest
