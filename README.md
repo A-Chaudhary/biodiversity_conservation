@@ -162,8 +162,11 @@ User Query (Species Name)
    # - OPENAI_API_KEY (required)
    # - IUCN_API_TOKEN (required)
    ```
+  - For OPENAI_API_KEY, use https://openai.com/index/openai-api/
+  - For IUCN_API_TOKEN, make an account on https://api.iucnredlist.org/users/sign_up to receive an api token.
+  
 
-5. **Optional: Configure MCP Server**
+6. **Optional: Configure MCP Server**
 
    The Model Context Protocol (MCP) server ([`mcp_server.py`](mcp_server.py)) exposes biodiversity data and analysis functions to AI assistants like Claude Desktop.
 
